@@ -57,8 +57,8 @@ class _ListMediaState extends State<ListMedia> {
             controller: _scrollController,
             maxCrossAxisExtent: 650,
             children: widget.mediaType == photoCode
-                ? _builPhotos(state.photos)
-                : _buildVideos(state.videos),
+                ? _builPhotoList(state.photos)
+                : _buildVideoList(state.videos),
           );
         }
         return Center(
@@ -68,7 +68,7 @@ class _ListMediaState extends State<ListMedia> {
     );
   }
 
-  List<Widget> _builPhotos(List<Photo> photos) {
+  List<Widget> _builPhotoList(List<Photo> photos) {
     List<GestureDetector> imagesList = [];
     for (Photo photo in photos) {
       imagesList.add(
@@ -93,7 +93,7 @@ class _ListMediaState extends State<ListMedia> {
     return imagesList;
   }
 
-  List<Widget> _buildVideos(List<Video> videos) {
+  List<Widget> _buildVideoList(List<Video> videos) {
     List<GestureDetector> videosList = [];
     for (Video video in videos) {
       videosList.add(
@@ -128,6 +128,10 @@ class PageViewMedia extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageView(
       controller: _pageController,
+      onPageChanged: (int page) {
+        BlocProvider.of<MediaListBloc>(context)
+            .add(MediaTypeChanged(mediaType: page));
+      },
       children: [
         ListMedia(photoCode),
         ListMedia(videoCode),

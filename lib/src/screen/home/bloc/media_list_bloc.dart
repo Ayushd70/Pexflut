@@ -12,7 +12,7 @@ const videoCode = 1;
 class MediaListBloc extends Bloc<MediaListEvent, MediaListState> {
   MediaRepository mediaRepository = MediaRepository();
 
-  int mediaType = 0;
+  int mediaType = photoCode;
   List<Photo> photos = [];
   List<Video> videos = [];
   int imagePage = 0;
