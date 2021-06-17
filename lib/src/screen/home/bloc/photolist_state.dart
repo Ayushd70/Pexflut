@@ -5,7 +5,7 @@ import 'package:pex_flut/src/models/video.dart';
 
 abstract class PhotoListState extends Equatable {
   final String mediaType;
-  PhotoListState({this.mediaType});
+  PhotoListState({required this.mediaType});
 
   @override
   List<Object> get props => [];
@@ -19,7 +19,8 @@ class InitialList extends PhotoListState {
 class ShowList extends PhotoListState {
   final List<Photo> photos;
   final List<Video> videos;
-  ShowList({required this.photos, required this.videos, required String status}) : super(mediaType: status);
+  ShowList({required this.photos, required this.videos, required String status})
+      : super(mediaType: status);
 }
 
 class Fetching extends PhotoListState {

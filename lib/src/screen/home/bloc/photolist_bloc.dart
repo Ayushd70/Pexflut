@@ -6,7 +6,6 @@ import 'photolist_event.dart';
 import 'photolist_state.dart';
 
 class PhotoListBloc extends Bloc<PhotoListEvent, PhotoListState> {
-
   MediaRepository mediaRepository = MediaRepository();
 
   MediaType mediaType;
@@ -17,13 +16,14 @@ class PhotoListBloc extends Bloc<PhotoListEvent, PhotoListState> {
 
   @override
   Stream<PhotoListState> mapEventToState(PhotoListEvent event) async* {
-
     if (event is FetchData) {
       yield Fetching(_getMediaType(mediaType));
       if (event.status == MediaType.image) {
-        images = await mediaRepository.fetchData(MediaType.image, 1, event.keyWord);
+        images =
+        await mediaRepository.fetchData(MediaType.image, 1, event.keyWord);
       } else {
-        videos = await mediaRepository.fetchData(MediaType.video, 1, event.keyWord);
+        videos =
+        await mediaRepository.fetchData(MediaType.video, 1, event.keyWord);
       }
       yield ShowList(
           photos: images, videos: videos, status: _getMediaType(mediaType));
@@ -33,6 +33,7 @@ class PhotoListBloc extends Bloc<PhotoListEvent, PhotoListState> {
           photos: images, videos: videos, status: _getMediaType(mediaType));
     }
   }
+
   String _getMediaType(MediaType mediaType) =>
       mediaType == MediaType.image ? 'Video' : 'Image';
-}}
+}
