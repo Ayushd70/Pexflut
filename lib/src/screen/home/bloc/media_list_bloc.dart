@@ -6,7 +6,7 @@ import '../../../data/repository/media_repository.dart';
 import 'media_list_event.dart';
 import 'media_list_state.dart';
 
-const imageCode = 0;
+const photoCode = 0;
 const videoCode = 1;
 
 class MediaListBloc extends Bloc<MediaListEvent, MediaListState> {
@@ -15,25 +15,31 @@ class MediaListBloc extends Bloc<MediaListEvent, MediaListState> {
   int mediaType;
   List<Photo> photos = [];
   List<Video> videos = [];
+  int imagePage = 0;
+  int videoPage = 0;
+  String keyWord = '';
 
-  MediaListBloc() : super(InitialList(mediaType: imageCode));
+  MediaListBloc() : super(InitialList(mediaType: photoCode));
 
   @override
   Stream<MediaListState> mapEventToState(MediaListEvent event) async* {
     if (event is FetchData) {
-      yield Fetching(mediaType);
-      if (event.mediaType == imageCode) {
-        photos = await mediaRepository.fetchData(
-            mediaType: imageCode, page: 1, keyWord: event.keyWord);
+      yield Fetching();
+      if (mediaType == photoCode) {
+        photos += await mediaRepository.fetchData(
+            mediaType: photoCode, page: imagePage + 1, keyWord: keyWord);
+        imagePage += 1;
       } else {
-        videos = await mediaRepository.fetchData(
-            mediaType: videoCode, page: 1, keyWord: event.keyWord);
+        videos += await mediaRepository.fetchData(
+            mediaType: videoCode, page: videoPage + 1, keyWord: keyWord);
+        videoPage += 1;
       }
+      print('photos.length = ${photos.length}');
+      print('videos.length = ${videos.length}');
       yield ShowList(photos: photos, videos: videos, mediaType: mediaType);
-      // print('$photos');
-      // print('$videos');
     }
-    if (event is StatusChanged) {
+    if (event is MediaTypeChanged) {
+      mediaType = event.mediaType;
       yield ShowList(photos: photos, videos: videos, mediaType: mediaType);
     }
   }

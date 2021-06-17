@@ -6,39 +6,69 @@ import '../bloc/media_list_bloc.dart';
 import '../bloc/media_list_event.dart';
 import '../bloc/media_list_state.dart';
 
-class ListMedia extends StatelessWidget {
+class ListMedia extends StatefulWidget {
   final int mediaType;
   ListMedia(
     this.mediaType,
   );
   @override
+  _ListMediaState createState() => _ListMediaState();
+}
+
+class _ListMediaState extends State<ListMedia> {
+  final _scrollController = ScrollController();
+  final _scrollThreshold = 200.0;
+  late MediaListBloc _mediaListBloc;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+    _mediaListBloc = BlocProvider.of<MediaListBloc>(context);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.position.pixels;
+    if (maxScroll - currentScroll <= _scrollThreshold) {
+      _mediaListBloc.add(FetchData());
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<MediaListBloc, MediaListState>(
-        builder: (BuildContext context, state) {
-      if (state is InitialList) {
-        BlocProvider.of<MediaListBloc>(context)
-            .add(FetchData(mediaType: mediaType, page: 1, keyWord: ''));
-        return Container();
-      }
-      if (state is Fetching) {
-        return Center(child: CircularProgressIndicator());
-      }
-      if (state is ShowList) {
-        return GridView.extent(
-          maxCrossAxisExtent: 650,
-          children: state.mediaType == 0
-              ? _builPhotos(state.photos)
-              : _buildVideos(state.videos),
+      builder: (BuildContext context, state) {
+        if (state is InitialList) {
+          _mediaListBloc.add(FetchData());
+          return Container();
+        }
+        if (state is Fetching) {
+          return Center(child: CircularProgressIndicator());
+        }
+        if (state is ShowList) {
+          return GridView.extent(
+            controller: _scrollController,
+            maxCrossAxisExtent: 650,
+            children: state.mediaType == photoCode
+                ? _builPhotos(state.photos)
+                : _buildVideos(state.videos),
+          );
+        }
+        return Center(
+          child: Text('Something wrong'),
         );
-      }
-      return Center(
-        child: Text('Something wrong'),
-      );
-    });
+      },
+    );
   }
 
   List<Widget> _builPhotos(List<Photo> photos) {
-    print(photos);
     List<GestureDetector> imagesList = [];
     for (Photo photo in photos) {
       imagesList.add(
@@ -61,7 +91,6 @@ class ListMedia extends StatelessWidget {
   }
 
   List<Widget> _buildVideos(List<Video> videos) {
-    print(videos);
     List<GestureDetector> videosList = [];
     for (Video video in videos) {
       videosList.add(
@@ -98,7 +127,7 @@ class PageViewMedia extends StatelessWidget {
           color: Colors.red,
         ),
         ListMedia(videoCode),
-        ListMedia(imageCode),
+        ListMedia(photoCode),
         Container(
           color: Colors.green,
         ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/media_list_bloc.dart';
 import '../bloc/search_bloc.dart';
+import 'list_media.dart';
 import 'search_bar.dart';
 
 class HomeScreen extends StatefulWidget {
