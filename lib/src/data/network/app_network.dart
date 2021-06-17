@@ -59,6 +59,20 @@ class AppNetwork {
     }
     return videos;
   }
+
+  Future<Photo> getImage(String imageKey) async {
+    Map<String, dynamic> data;
+    data = (await _sendRequest('https://api.pexels.com/v1/photos/$imageKey'))!;
+    Photo photo = Photo.fromMap(data);
+    return photo;
+  }
+
+  Future<Video> getVideo(String videoKey) async {
+    Map<String, dynamic> data;
+    data = (await _sendRequest('https://api.pexels.com/videos/videos/$videoKey'))!;
+    Video video = Video.fromMap(data);
+    return video;
+  }
 }
 
 final AppNetwork appNetwork = AppNetwork();

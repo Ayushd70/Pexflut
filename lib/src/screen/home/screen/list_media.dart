@@ -76,7 +76,7 @@ class _ListMediaState extends State<ListMedia> {
       imagesList.add(
         GestureDetector(
           onTap: () {
-            Navigator.pushReplacementNamed(context, 'mediaDetail');
+            Navigator.pushNamed(context, 'mediaDetail/$photoCode/${photo.id}');
           },
           child: Container(
             child: Card(
@@ -101,7 +101,7 @@ class _ListMediaState extends State<ListMedia> {
       videosList.add(
         GestureDetector(
           onTap: () {
-            Navigator.pushReplacementNamed(context, 'mediaDetail');
+            Navigator.pushNamed(context, 'mediaDetail/$videoCode/${video.id}');
           },
           child: Container(
             child: Card(

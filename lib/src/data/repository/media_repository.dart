@@ -41,4 +41,12 @@ class MediaRepository {
       return [];
     }
   }
+
+  Future<Photo> getImage(String imageKey) {
+    return appNetwork.getImage(imageKey);
+  }
+
+  Future<Video> getVideo(String videoKey) {
+    return appNetwork.getVideo(videoKey);
+  }
 }

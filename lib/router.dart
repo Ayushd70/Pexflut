@@ -2,8 +2,6 @@ import 'package:pex_flut/src/screen/home/screen/home_screen.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
-import 'src/screen/media_details/media_details-screen.dart';
-
 class FluroRouter {
   static Router router = Router();
 
@@ -12,9 +10,10 @@ class FluroRouter {
           HomeScreen());
   static Handler _mediaDetailHandler = Handler(
       handlerFunc: (BuildContext context, Map<String, dynamic> params) =>
-          MediaDetail());
+          MediaDetailScreen(params['mediaType'][0], params['mediaKey'][0]));
   static void setupRouter() {
     router.define('home', handler: _homeHandler);
-    router.define('mediaDetail', handler: _mediaDetailHandler);
+    router.define('mediaDetail/:mediaType/:mediaKey',
+        handler: _mediaDetailHandler);
   }
 }
