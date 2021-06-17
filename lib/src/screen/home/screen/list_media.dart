@@ -36,8 +36,6 @@ class _ListMediaState extends State<ListMedia> {
   void _onScroll() {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
-    print(maxScroll);
-    print(currentScroll);
     if (maxScroll - currentScroll <= _scrollThreshold) {
       _mediaListBloc.add(FetchData());
     }
