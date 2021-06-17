@@ -2,20 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/search_bloc.dart';
 
-AppBar buildSearchBar(TextEditingController _controller) {
+AppBar buildSearchBar(TextEditingController textEditingControler) {
   return AppBar(
     title: BlocBuilder<PhotoSearchBloc, PhotoSearchState>(
       builder: (BuildContext context, state) {
         if (state is InitialSearch) {
           return Row(
             children: [
-              OutlinedButton(
-                onPressed: () {  },
-                child: Text(
-                  'Image',
-                  style: TextStyle(color: Colors.white),
-                ),
-              ),
               Expanded(
                 child: Text('${state.keyWord}'),
               ),
@@ -40,7 +33,7 @@ AppBar buildSearchBar(TextEditingController _controller) {
                   alignment: const Alignment(1.0, 1.0),
                   children: [
                     TextField(
-                      controller: _controller,
+                      controller: textEditingControler,
                       autofocus: true,
                       textInputAction: TextInputAction.search,
                       onSubmitted: (value) {
@@ -49,7 +42,7 @@ AppBar buildSearchBar(TextEditingController _controller) {
                       },
                     ),
                     IconButton(
-                      onPressed: () => _controller.clear(),
+                      onPressed: () => textEditingControler.clear(),
                       icon: Icon(Icons.clear),
                     ),
                   ],
