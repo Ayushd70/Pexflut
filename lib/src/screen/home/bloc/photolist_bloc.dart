@@ -13,26 +13,26 @@ class PhotoListBloc extends Bloc<PhotoListEvent, PhotoListState> {
   List<Photo> images = [];
   List<Video> videos = [];
 
-  PhotoListBloc() : super(InitialList(status: 'Image'));
+  PhotoListBloc() : super(InitialList(mediaType: 'Video'));
 
   @override
   Stream<PhotoListState> mapEventToState(PhotoListEvent event) async* {
 
     if (event is FetchData) {
-      yield Fetching(_getStatus(mediaType));
+      yield Fetching(_getMediaType(mediaType));
       if (event.status == MediaType.image) {
         images = await mediaRepository.fetchData(MediaType.image, 1, event.keyWord);
       } else {
         videos = await mediaRepository.fetchData(MediaType.video, 1, event.keyWord);
       }
       yield ShowList(
-          photos: images, videos: videos, status: _getStatus(mediaType));
+          photos: images, videos: videos, status: _getMediaType(mediaType));
     }
     if (event is StatusChanged) {
       yield ShowList(
-          photos: images, videos: videos, status: _getStatus(mediaType));
+          photos: images, videos: videos, status: _getMediaType(mediaType));
     }
   }
-  String _getStatus(MediaType status) =>
-      status == MediaType.image ? 'Image' : 'Video';
-}
+  String _getMediaType(MediaType mediaType) =>
+      mediaType == MediaType.image ? 'Video' : 'Image';
+}}

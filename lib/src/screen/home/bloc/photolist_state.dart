@@ -4,28 +4,28 @@ import 'package:pex_flut/src/models/video.dart';
 
 
 abstract class PhotoListState extends Equatable {
-  final String status;
-  PhotoListState({required this.status});
+  final String mediaType;
+  PhotoListState({this.mediaType});
 
   @override
   List<Object> get props => [];
 }
 
 class InitialList extends PhotoListState {
-  final String status;
-  InitialList({required this.status}) : super(status: status);
+  final String mediaType;
+  InitialList({required this.mediaType}) : super(mediaType: mediaType);
 }
 
 class ShowList extends PhotoListState {
   final List<Photo> photos;
   final List<Video> videos;
-  ShowList({required this.photos, required this.videos, required String status}) : super(status: status);
+  ShowList({required this.photos, required this.videos, required String status}) : super(mediaType: status);
 }
 
 class Fetching extends PhotoListState {
-  Fetching(String status) : super(status: status);
+  Fetching(String status) : super(mediaType: status);
 }
 
 class FetchingFail extends PhotoListState {
-  FetchingFail(String status) : super(status: status);
+  FetchingFail(String status) : super(mediaType: status);
 }

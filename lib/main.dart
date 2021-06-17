@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pex_flut/src/screen/home/home_screen.dart';
+import 'src/screen/home/screen/home_screen.dart';
 import 'src/screen/home/bloc/photolist_bloc.dart';
 import 'src/screen/home/bloc/search_bloc.dart';
 
