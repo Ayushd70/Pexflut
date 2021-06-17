@@ -9,8 +9,8 @@ import '../bloc/media_list_state.dart';
 class ListMedia extends StatefulWidget {
   final int mediaType;
   ListMedia(
-    this.mediaType,
-  );
+      this.mediaType,
+      );
   @override
   _ListMediaState createState() => _ListMediaState();
 }
@@ -36,6 +36,8 @@ class _ListMediaState extends State<ListMedia> {
   void _onScroll() {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
+    print(maxScroll);
+    print(currentScroll);
     if (maxScroll - currentScroll <= _scrollThreshold) {
       _mediaListBloc.add(FetchData());
     }
@@ -56,7 +58,7 @@ class _ListMediaState extends State<ListMedia> {
           return GridView.extent(
             controller: _scrollController,
             maxCrossAxisExtent: 650,
-            children: state.mediaType == photoCode
+            children: widget.mediaType == photoCode
                 ? _builPhotos(state.photos)
                 : _buildVideos(state.videos),
           );
@@ -73,6 +75,9 @@ class _ListMediaState extends State<ListMedia> {
     for (Photo photo in photos) {
       imagesList.add(
         GestureDetector(
+          onTap: () {
+            Navigator.pushReplacementNamed(context, 'mediaDetail');
+          },
           child: Container(
             child: Card(
               clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -95,6 +100,9 @@ class _ListMediaState extends State<ListMedia> {
     for (Video video in videos) {
       videosList.add(
         GestureDetector(
+          onTap: () {
+            Navigator.pushReplacementNamed(context, 'mediaDetail');
+          },
           child: Container(
             child: Card(
               clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -123,17 +131,8 @@ class PageViewMedia extends StatelessWidget {
     return PageView(
       controller: _pageController,
       children: [
-        Container(
-          color: Colors.red,
-        ),
-        ListMedia(videoCode),
         ListMedia(photoCode),
-        Container(
-          color: Colors.green,
-        ),
-        Container(
-          color: Colors.purple,
-        ),
+        ListMedia(videoCode),
       ],
     );
   }

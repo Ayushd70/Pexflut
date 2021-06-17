@@ -12,14 +12,14 @@ const videoCode = 1;
 class MediaListBloc extends Bloc<MediaListEvent, MediaListState> {
   MediaRepository mediaRepository = MediaRepository();
 
-  int mediaType;
+  int mediaType = 0;
   List<Photo> photos = [];
   List<Video> videos = [];
   int imagePage = 0;
   int videoPage = 0;
   String keyWord = '';
 
-  MediaListBloc() : super(InitialList(mediaType: photoCode));
+  MediaListBloc() : super(InitialList());
 
   @override
   Stream<MediaListState> mapEventToState(MediaListEvent event) async* {
@@ -29,17 +29,19 @@ class MediaListBloc extends Bloc<MediaListEvent, MediaListState> {
         photos += await mediaRepository.fetchData(
             mediaType: photoCode, page: imagePage + 1, keyWord: keyWord);
         imagePage += 1;
+        print('photos.length = ${photos.length}');
       } else {
         videos += await mediaRepository.fetchData(
             mediaType: videoCode, page: videoPage + 1, keyWord: keyWord);
         videoPage += 1;
+        print('videos.length = ${videos.length}');
       }
-      print('photos.length = ${photos.length}');
-      print('videos.length = ${videos.length}');
+
       yield ShowList(photos: photos, videos: videos, mediaType: mediaType);
     }
     if (event is MediaTypeChanged) {
       mediaType = event.mediaType;
+
       yield ShowList(photos: photos, videos: videos, mediaType: mediaType);
     }
   }

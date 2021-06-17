@@ -9,10 +9,7 @@ abstract class MediaListState extends Equatable {
   List<Object> get props => [];
 }
 
-class InitialList extends MediaListState {
-  final int mediaType;
-  InitialList({required this.mediaType});
-}
+class InitialList extends MediaListState {}
 
 class ShowList extends MediaListState {
   final List<Photo> photos;

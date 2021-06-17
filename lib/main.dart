@@ -1,16 +1,19 @@
+import 'package:pex_flut/router.dart';
 import 'package:flutter/material.dart';
-import 'package:pex_flut/src/screen/home/screen/home_screen.dart';
 
-void main() {
-  runApp(MyApp());
-}
+  void main() {
+    FluroRouter.setupRouter();
+    runApp(MyApp());
+  }
 
-class MyApp extends StatelessWidget {
+  class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'PexFlut',
-      home: HomeScreen(),
-    );
+  return MaterialApp(
+  title: 'PexFlut',
+  initialRoute: 'home',
+  onGenerateRoute: FluroRouter.router.generator,
+  );
+  }
   }
 }
