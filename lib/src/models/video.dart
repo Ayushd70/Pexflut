@@ -24,6 +24,7 @@ class Video extends Equatable {
   final VideoUser user;
   final List<VideoFile> videoFiles;
   final List<VideoPicture> videoPictures;
+  bool liked = false;
 
   factory Video.fromMap(Map<String, dynamic> map) {
     var files = <VideoFile>[];

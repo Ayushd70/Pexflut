@@ -20,6 +20,7 @@ class Photo extends Equatable {
   final String photographerUrl;
   final int photographerId;
   final ImageSrc src;
+  bool liked = false;
 
   factory Photo.fromMap(Map<String, dynamic> map) => Photo(
       id: map['id'],

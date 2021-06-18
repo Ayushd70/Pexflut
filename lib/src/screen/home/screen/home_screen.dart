@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         BlocProvider<MediaListBloc>(
           create: (BuildContext context) => MediaListBloc(),
-        )
+        ),
       ],
       child: Scaffold(
         appBar: buildSearchBar(_textEditingControler),

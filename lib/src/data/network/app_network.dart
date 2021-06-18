@@ -3,9 +3,10 @@ import 'package:pex_flut/src/models/image.dart';
 import 'package:dio/dio.dart';
 
 class AppNetwork {
+  static const per_page = 30;
   static const authorization =
       '563492ad6f9170000100000156d5de70ea134a2c86369c73c307839c';
-  var dio = Dio()..options.headers['Authorization'] = authorization;
+  final Dio dio = Dio()..options.headers['Authorization'] = authorization;
 
   Future<Map<String, dynamic>?> _sendRequest(String url) async {
     try {
@@ -21,7 +22,7 @@ class AppNetwork {
     Map<String, dynamic> data;
     var images = <Photo>[];
     data = (await _sendRequest(
-        'https://api.pexels.com/v1/search?query=$keyWord&per_page=15&$page'))!;
+        'https://api.pexels.com/v1/search?query=$keyWord&per_page=$per_page&$page'))!;
     for (Map map in data['photos']) {
       images.add(Photo.fromMap(map));
     }
@@ -31,7 +32,8 @@ class AppNetwork {
   Future<List<Photo>> curatedImage(int page) async {
     Map<String, dynamic> data;
     var images = <Photo>[];
-    data = (await _sendRequest('https://api.pexels.com/v1/curated?page=$page'))!;
+    data = (await _sendRequest(
+        'https://api.pexels.com/v1/curated?per_page=$per_page&page=$page'))!;
     for (Map map in data['photos']) {
       images.add(Photo.fromMap(map));
     }
@@ -42,7 +44,7 @@ class AppNetwork {
     Map<String, dynamic> data;
     var videos = <Video>[];
     data = (await _sendRequest(
-        'https://api.pexels.com/videos/search?query=$keyWord&page=$page'))!;
+        'https://api.pexels.com/videos/search?query=$keyWord&per_page=$per_page&page=$page'))!;
     for (Map map in data['videos']) {
       videos.add(Video.fromMap(map));
     }
@@ -53,7 +55,7 @@ class AppNetwork {
     Map<String, dynamic> data;
     var videos = <Video>[];
     data = (await _sendRequest(
-        'https://api.pexels.com/videos/popular?per_page=15&page=$page'))!;
+        'https://api.pexels.com/videos/popular?per_page=$per_page&page=$page'))!;
     for (Map map in data['videos']) {
       videos.add(Video.fromMap(map));
     }

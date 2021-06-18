@@ -15,6 +15,11 @@ class InitialMediaDetailEvent extends MediaDetailEvent {
   InitialMediaDetailEvent({required this.mediaType, required this.mediaKey});
 }
 
+class LikedEvent extends MediaDetailEvent {
+  final media;
+  LikedEvent({this.media});
+}
+
 abstract class MediaDetailState extends Equatable {
   MediaDetailState();
   @override
@@ -37,8 +42,14 @@ class ShowMediaState extends MediaDetailState {
   final int mediaType;
   final Photo photo;
   final Video video;
-
-  ShowMediaState({required this.mediaType, required this.photo, required this.video});
+  final List<Photo> relatedPhoto;
+  final List<Video> relatedVideo;
+  ShowMediaState(
+      {required this.mediaType,
+        required this.photo,
+        required this.video,
+        required this.relatedPhoto,
+        required this.relatedVideo});
 }
 
 class MediaDetailBloc extends Bloc<MediaDetailEvent, MediaDetailState> {
@@ -47,14 +58,21 @@ class MediaDetailBloc extends Bloc<MediaDetailEvent, MediaDetailState> {
 
   @override
   Stream<MediaDetailState> mapEventToState(MediaDetailEvent event) async* {
+    if (event is LikedEvent) {
+      await mediaRepository.insert(event.media.id);
+    }
     if (event is InitialMediaDetailEvent) {
       yield LoadingMediaState();
       if (event.mediaType == '$photoCode') {
         Photo photo = await mediaRepository.getImage(event.mediaKey);
-        yield ShowMediaState(mediaType: photoCode, photo: photo);
+        List<Photo> relatedPhoto = await mediaRepository.relatedImage(photo);
+        yield ShowMediaState(
+            mediaType: photoCode, photo: photo, relatedPhoto: relatedPhoto);
       } else {
         Video video = await mediaRepository.getVideo(event.mediaKey);
-        yield ShowMediaState(mediaType: videoCode, video: video);
+        List<Video> relatedVideo = await mediaRepository.relatedVideo(video);
+        yield ShowMediaState(
+            mediaType: videoCode, video: video, relatedVideo: relatedVideo);
       }
     }
   }

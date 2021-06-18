@@ -1,8 +1,9 @@
 import 'package:pex_flut/src/screen/home/bloc/media_list_bloc.dart';
-import 'package:pex_flut/src/screen/media_details/bloc/media_detail_bloc.dart';
+import 'photo_show_screen.dart';
+import '../bloc/media_detail_bloc.dart';
+import 'video_play_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'bloc/media_detail_bloc.dart';
 
 class MediaDetailScreen extends StatelessWidget {
   final String mediaType;
@@ -28,9 +29,8 @@ class MediaDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-            onPressed: () => Navigator.popAndPushNamed(context, 'home'),
-            icon: Icon(Icons.arrow_back)),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: BlocBuilder<MediaDetailBloc, MediaDetailState>(
           builder: (BuildContext context, state) {
@@ -44,9 +44,11 @@ class MediaDetail extends StatelessWidget {
             }
             if (state is ShowMediaState) {
               if (state.mediaType == photoCode) {
-                return Image.network(state.photo.src.large);
+                return PhotoShowScreen(
+                  state: state,
+                );
               } else {
-                return Image.network(state.video.videoPictures[0].picture);
+                return VideoPlayerScreen(state: state);
               }
             } else {
               return Text('Something wrong');

@@ -1,6 +1,8 @@
 import 'package:pex_flut/src/data/network/app_network.dart';
 import 'package:pex_flut/src/models/image.dart';
 import 'package:pex_flut/src/models/video.dart';
+import 'package:pex_flut/src/data/database/app_database.dart';
+
 
 class MediaRepository {
   MediaRepository.privateConstructor();
@@ -27,8 +29,21 @@ class MediaRepository {
     return appNetwork.popularVideo(page);
   }
 
+  Future<List<Photo>> relatedImage(Photo photo) {
+    String keyWord = photo.url;
+    if (!keyWord.contains('-')) return appNetwork.curatedImage(1);
+    keyWord = keyWord.substring(29, keyWord.lastIndexOf('-'));
+    return appNetwork.searchImage(keyWord, 1);
+  }
+
+  Future<List<Video>> relatedVideo(Video video) {
+    String keyWord = video.url;
+    if (!video.url.contains('-')) return appNetwork.popularVideo(1);
+    keyWord = keyWord.substring(29, keyWord.lastIndexOf('-'));
+    return appNetwork.searchVideo(keyWord, 1);
+  }
+
   Future<List> fetchData({required int mediaType, required int page, required String keyWord}) async {
-    // print('fetchedData $mediaType, $page, $keyWord');
     if (mediaType == 0 && keyWord != '') {
       return await searchImage(keyWord, page);
     } else if (mediaType == 1 && keyWord != '') {
@@ -48,5 +63,21 @@ class MediaRepository {
 
   Future<Video> getVideo(String videoKey) {
     return appNetwork.getVideo(videoKey);
+  }
+
+  Future<void> insert(int id) {
+    return appDatabase.insertMediaData(id);
+  }
+
+  Future<void> delete(int id) {
+    return appDatabase.deleteMediaData(id);
+  }
+
+  Future<bool> isContain(int id) {
+    return appDatabase.isContain(id);
+  }
+
+  Future<List<int>> mediaData() {
+    return appDatabase.mediaData();
   }
 }

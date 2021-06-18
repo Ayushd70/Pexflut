@@ -1,3 +1,5 @@
+import 'photo_widget.dart';
+import 'video_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../models/image.dart';
@@ -8,16 +10,14 @@ import '../bloc/media_list_state.dart';
 
 class ListMedia extends StatefulWidget {
   final int mediaType;
-  ListMedia(
-      this.mediaType,
-      );
+  ListMedia({required this.mediaType, Key? key}) : super(key: key);
+
   @override
   _ListMediaState createState() => _ListMediaState();
 }
 
 class _ListMediaState extends State<ListMedia> {
   final _scrollController = ScrollController();
-  final _scrollThreshold = 200.0;
   late MediaListBloc _mediaListBloc;
 
   @override
@@ -36,8 +36,8 @@ class _ListMediaState extends State<ListMedia> {
   void _onScroll() {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
-    if (maxScroll - currentScroll <= _scrollThreshold) {
-      _mediaListBloc.add(FetchData());
+    if (maxScroll - currentScroll < 200) {
+      _mediaListBloc.add(FetchDataEvent());
     }
   }
 
@@ -45,14 +45,15 @@ class _ListMediaState extends State<ListMedia> {
   Widget build(BuildContext context) {
     return BlocBuilder<MediaListBloc, MediaListState>(
       builder: (BuildContext context, state) {
-        if (state is InitialList) {
-          _mediaListBloc.add(FetchData());
-          return Container();
-        }
-        if (state is Fetching) {
+        if (state is InitialListState) {
+          _mediaListBloc.add(FetchDataEvent());
           return Center(child: CircularProgressIndicator());
         }
-        if (state is ShowList) {
+        if (state is FetchingState) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        if (state is ShowListState) {
           return GridView.extent(
             controller: _scrollController,
             maxCrossAxisExtent: 650,
@@ -61,32 +62,17 @@ class _ListMediaState extends State<ListMedia> {
                 : _buildVideoList(state.videos),
           );
         }
-        return Center(
-          child: Text('Something wrong'),
-        );
+        return Container();
       },
     );
   }
 
   List<Widget> _builPhotoList(List<Photo> photos) {
-    List<GestureDetector> imagesList = [];
+    List<Widget> imagesList = [];
     for (Photo photo in photos) {
       imagesList.add(
-        GestureDetector(
-          onTap: () {
-            Navigator.pushNamed(context, 'mediaDetail/$photoCode/${photo.id}');
-          },
-          child: Container(
-            child: Card(
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10.0),
-                ),
-              ),
-              child: Image.network(photo.src.large, fit: BoxFit.cover),
-            ),
-          ),
+        PhotoWidget(
+          photo: photo,
         ),
       );
     }
@@ -94,25 +80,11 @@ class _ListMediaState extends State<ListMedia> {
   }
 
   List<Widget> _buildVideoList(List<Video> videos) {
-    List<GestureDetector> videosList = [];
+    List<Widget> videosList = [];
     for (Video video in videos) {
       videosList.add(
-        GestureDetector(
-          onTap: () {
-            Navigator.pushNamed(context, 'mediaDetail/$videoCode/${video.id}');
-          },
-          child: Container(
-            child: Card(
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10.0),
-                ),
-              ),
-              child: Image.network(video.videoPictures[0].picture,
-                  fit: BoxFit.cover),
-            ),
-          ),
+        VideoWidget(
+          video: video,
         ),
       );
     }
@@ -120,22 +92,31 @@ class _ListMediaState extends State<ListMedia> {
   }
 }
 
-class PageViewMedia extends StatelessWidget {
+class PageViewMedia extends StatefulWidget {
   final PageController _pageController;
 
   const PageViewMedia(this._pageController);
   @override
+  _PageViewMediaState createState() => _PageViewMediaState();
+}
+
+class _PageViewMediaState extends State<PageViewMedia> {
+  final PageStorageBucket _bucket = PageStorageBucket();
+  @override
   Widget build(BuildContext context) {
-    return PageView(
-      controller: _pageController,
-      onPageChanged: (int page) {
-        BlocProvider.of<MediaListBloc>(context)
-            .add(MediaTypeChanged(mediaType: page));
-      },
-      children: [
-        ListMedia(photoCode),
-        ListMedia(videoCode),
-      ],
+    return PageStorage(
+      bucket: _bucket,
+      child: PageView(
+        controller: widget._pageController,
+        onPageChanged: (int page) {
+          BlocProvider.of<MediaListBloc>(context)
+              .add(MediaTypeChangedEvent(mediaType: page));
+        },
+        children: [
+          ListMedia(mediaType: photoCode, key: PageStorageKey('photo')),
+          ListMedia(mediaType: videoCode, key: PageStorageKey('video')),
+        ],
+      ),
     );
   }
 }

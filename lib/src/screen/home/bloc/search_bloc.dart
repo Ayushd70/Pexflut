@@ -8,17 +8,19 @@ abstract class PhotoSearchEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class SearchButton extends PhotoSearchEvent {
-  SearchButton();
+class SearchButtonEvent extends PhotoSearchEvent {
+  SearchButtonEvent();
 }
 
-class BackArrow extends PhotoSearchEvent {
-  BackArrow();
+class BackArrowEvent extends PhotoSearchEvent {
+  BackArrowEvent();
 }
 
-class Submit extends PhotoSearchEvent {
+class SubmitEvent extends PhotoSearchEvent {
   final String keyWord;
-  Submit({required this.keyWord});
+  SubmitEvent({required this.keyWord});
+  @override
+  List<Object> get props => [keyWord];
 }
 
 abstract class PhotoSearchState extends Equatable {
@@ -28,29 +30,38 @@ abstract class PhotoSearchState extends Equatable {
   List<Object> get props => [];
 }
 
-class InitialSearch extends PhotoSearchState {
+class InitialSearchState extends PhotoSearchState {
+  InitialSearchState();
+}
+
+class TypingState extends PhotoSearchState {
   final String keyWord;
-  InitialSearch({this.keyWord = ''});
+  TypingState({required this.keyWord});
   @override
   List<Object> get props => [keyWord];
 }
 
-class Typing extends PhotoSearchState {
-  Typing();
+class SearchedState extends PhotoSearchState {
+  final String keyWord;
+  SearchedState({required this.keyWord});
+  @override
+  List<Object> get props => [keyWord];
 }
 
 class PhotoSearchBloc extends Bloc<PhotoSearchEvent, PhotoSearchState> {
-  PhotoSearchBloc() : super(InitialSearch());
+  String keyWord = '';
+  PhotoSearchBloc() : super(InitialSearchState());
   @override
   Stream<PhotoSearchState> mapEventToState(PhotoSearchEvent event) async* {
-    if (event is SearchButton) {
-      yield Typing();
+    if (event is SearchButtonEvent) {
+      yield TypingState(keyWord: '');
     }
-    if (event is BackArrow) {
-      yield InitialSearch();
+    if (event is BackArrowEvent) {
+      yield InitialSearchState();
     }
-    if (event is Submit) {
-      print("Submitted with keyWord = ${event.keyWord}");
+    if (event is SubmitEvent) {
+      keyWord = event.keyWord;
+      yield SearchedState(keyWord: keyWord);
     }
   }
 }
