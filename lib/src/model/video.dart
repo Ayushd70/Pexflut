@@ -5,16 +5,17 @@ import 'package:equatable/equatable.dart';
 
 // ignore: must_be_immutable
 class Video extends Equatable {
-  Video(
-      {this.id,
-        this.width,
-        this.height,
-        this.url,
-        this.image,
-        this.duration,
-        this.user,
-        this.videoFiles,
-        this.videoPictures});
+  Video({
+    required this.id,
+    required this.width,
+    required this.height,
+    required this.url,
+    required this.image,
+    required this.duration,
+    required this.user,
+    required this.videoFiles,
+    required this.videoPictures,
+  });
 
   final int id;
   final int width;
@@ -30,10 +31,10 @@ class Video extends Equatable {
   factory Video.fromMap(Map<String, dynamic> map) {
     var files = <VideoFile>[];
     var pictures = <VideoPicture>[];
-    for (Map file in map['video_files']) {
+    for (Map<String, dynamic> file in map['video_files']) {
       files.add(VideoFile.fromMap(file));
     }
-    for (Map picture in map['video_pictures']) {
+    for (Map<String, dynamic> picture in map['video_pictures']) {
       pictures.add(VideoPicture.fromMap(picture));
     }
     return Video(

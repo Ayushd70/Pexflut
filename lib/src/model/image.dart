@@ -3,15 +3,16 @@ import 'image_src.dart';
 
 // ignore: must_be_immutable
 class Photo extends Equatable {
-  Photo(
-      {this.id,
-        this.width,
-        this.height,
-        this.url,
-        this.photographer,
-        this.photographerUrl,
-        this.photographerId,
-        this.src});
+  Photo({
+    required this.id,
+    required this.width,
+    required this.height,
+    required this.url,
+    required this.photographer,
+    required this.photographerUrl,
+    required this.photographerId,
+    required this.src,
+  });
   final int id;
   final int width;
   final int height;

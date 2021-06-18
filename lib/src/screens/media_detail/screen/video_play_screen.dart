@@ -1,4 +1,5 @@
 import 'package:pex_flut/resource/resources.dart';
+import 'package:pex_flut/src/model/video.dart';
 import '../bloc/media_detail_event.dart';
 import '../bloc/media_detail_state.dart';
 import '../bloc/media_detail_bloc.dart';
@@ -8,20 +9,21 @@ import 'package:video_player/video_player.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   final ShowMediaState state;
-  VideoPlayerScreen({this.state});
+  VideoPlayerScreen({required this.state});
 
   @override
   _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
 }
 
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
-  VideoPlayerController _controller;
-  Future<void> _initializeVideoPlayerFuture;
+  late VideoPlayerController _controller;
+  late Future<void> _initializeVideoPlayerFuture;
+
+  Video get video => widget.state.video!;
 
   @override
   void initState() {
-    _controller =
-        VideoPlayerController.network(widget.state.video.videoFiles[0].link);
+    _controller = VideoPlayerController.network(this.video.videoFiles[0].link);
     _initializeVideoPlayerFuture = _controller.initialize();
     _controller.setLooping(true);
     super.initState();
@@ -83,17 +85,16 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            widget.state.video.user.name,
+                            this.video.user.name,
                             style: TextStyle(fontSize: 20),
                           ),
                           SizedBox(height: 10),
-                          Text(
-                              'Length: ${widget.state.video.videoFiles.length}s')
+                          Text('Length: ${this.video.videoFiles.length}s')
                         ],
                       ),
                       IconButton(
                         icon: Icon(
-                          widget.state.video.liked
+                          this.video.liked
                               ? Icons.favorite
                               : Icons.favorite_border,
                           color: Colors.red,
@@ -102,7 +103,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                           BlocProvider.of<MediaDetailBloc>(context).add(
                               LikedEvent(
                                   mediaTypeCode: videoCode,
-                                  mediaID: widget.state.video.id));
+                                  mediaID: this.video.id));
                         },
                       ),
                     ],

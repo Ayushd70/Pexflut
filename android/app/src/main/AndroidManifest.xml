@@ -1,5 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="dev.ayushd70.pex_flut">
+
+    <!-- Internet Permission to show photos and videos -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
    <application
         android:label="pex_flut"
         android:icon="@mipmap/ic_launcher">

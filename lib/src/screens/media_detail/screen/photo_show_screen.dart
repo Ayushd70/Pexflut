@@ -9,14 +9,18 @@ import 'package:flutter/material.dart';
 
 class PhotoShowScreen extends StatefulWidget {
   final ShowMediaState state;
-  PhotoShowScreen({this.state});
+
+  PhotoShowScreen({required this.state});
+
   @override
   _PhotoShowScreenState createState() => _PhotoShowScreenState();
 }
 
 class _PhotoShowScreenState extends State<PhotoShowScreen>
     with SingleTickerProviderStateMixin {
-  RubberAnimationController _controller;
+  late RubberAnimationController _controller;
+
+  Photo get photo => widget.state.photo!;
 
   @override
   void initState() {
@@ -54,7 +58,7 @@ class _PhotoShowScreenState extends State<PhotoShowScreen>
   }
 
   Widget _getLowerLayer() {
-    return (widget.state.photo.width > widget.state.photo.height)
+    return (this.photo.width > this.photo.height)
         ? buildHorizontalPhoto()
         : buildVerticalPhoto();
   }
@@ -65,7 +69,7 @@ class _PhotoShowScreenState extends State<PhotoShowScreen>
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
-          children: _builPhotoList(widget.state.relatedPhoto, context),
+          children: _builPhotoList(widget.state.relatedPhoto!, context),
         ),
       ),
     );
@@ -104,7 +108,7 @@ class _PhotoShowScreenState extends State<PhotoShowScreen>
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.network(widget.state.photo.src.large),
+            Image.network(this.photo.src.large),
             Container(
               padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
               decoration: BoxDecoration(
@@ -125,14 +129,13 @@ class _PhotoShowScreenState extends State<PhotoShowScreen>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.state.photo.photographer,
+                          this.photo.photographer,
                           style: TextStyle(fontSize: 20),
                         ),
                         SizedBox(
                           height: 10,
                         ),
-                        Text(
-                            'Size: ${widget.state.photo.width} x ${widget.state.photo.height}')
+                        Text('Size: ${this.photo.width} x ${this.photo.height}')
                       ],
                     ),
                     IconButton(
@@ -140,10 +143,10 @@ class _PhotoShowScreenState extends State<PhotoShowScreen>
                         BlocProvider.of<MediaDetailBloc>(context).add(
                             LikedEvent(
                                 mediaTypeCode: photoCode,
-                                mediaID: widget.state.photo.id));
+                                mediaID: this.photo.id));
                       },
                       icon: Icon(
-                        widget.state.photo.liked
+                        this.photo.liked
                             ? Icons.favorite
                             : Icons.favorite_border,
                         color: Colors.red,
@@ -168,7 +171,7 @@ class _PhotoShowScreenState extends State<PhotoShowScreen>
         children: [
           Container(
               padding: EdgeInsets.fromLTRB(10, 5, 10, 0),
-              child: Image.network(widget.state.photo.src.large)),
+              child: Image.network(this.photo.src.large)),
           Container(
             padding: EdgeInsets.only(left: 10, right: 10),
             child: Container(
@@ -191,17 +194,16 @@ class _PhotoShowScreenState extends State<PhotoShowScreen>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.state.photo.photographer,
+                          this.photo.photographer,
                           style: TextStyle(fontSize: 20),
                         ),
                         SizedBox(height: 10),
-                        Text(
-                            'Size: ${widget.state.photo.width} x ${widget.state.photo.height}')
+                        Text('Size: ${this.photo.width} x ${this.photo.height}')
                       ],
                     ),
                     IconButton(
                       icon: Icon(
-                        widget.state.photo.liked
+                        this.photo.liked
                             ? Icons.favorite
                             : Icons.favorite_border,
                         color: Colors.red,
@@ -210,7 +212,7 @@ class _PhotoShowScreenState extends State<PhotoShowScreen>
                         BlocProvider.of<MediaDetailBloc>(context).add(
                             LikedEvent(
                                 mediaTypeCode: photoCode,
-                                mediaID: widget.state.photo.id));
+                                mediaID: this.photo.id));
                       },
                     ),
                   ],

@@ -1,3 +1,4 @@
+
 import 'package:pex_flut/resource/resources.dart';
 import 'package:pex_flut/src/model/image.dart';
 import 'package:pex_flut/src/model/video.dart';
@@ -7,10 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BuildMediaWidget extends StatefulWidget {
-  final Photo photo;
-  final Video video;
+  final Photo? photo;
+  final Video? video;
 
-  const BuildMediaWidget({Key key, this.photo, this.video}) : super(key: key);
+  const BuildMediaWidget({
+    Key? key,
+    this.photo,
+    this.video,
+  }) : super(key: key);
 
   @override
   _BuildMediaWidgetState createState() => _BuildMediaWidgetState();
@@ -21,8 +26,8 @@ class _BuildMediaWidgetState extends State<BuildMediaWidget> {
   Widget build(BuildContext context) {
     // ignore: unnecessary_null_comparison
     return (widget.photo == null)
-        ? _buildVideoWidget(context, widget.video)
-        : _buildImageWidget(context, widget.photo);
+        ? _buildVideoWidget(context, widget.video!)
+        : _buildImageWidget(context, widget.photo!);
   }
 
   Widget _buildImageWidget(BuildContext context, Photo photo) {

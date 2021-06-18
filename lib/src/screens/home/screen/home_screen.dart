@@ -12,7 +12,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  TextEditingController _textEditingControler;
+  late TextEditingController _textEditingControler;
 
   PageController pageController = PageController(
     initialPage: 0,
@@ -70,7 +70,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<BottomNavigationBarItem> buildBottomNavBarItems() {
     return [
-      BottomNavigationBarItem(icon: Icon(Icons.photo_album), label: photoString),
+      BottomNavigationBarItem(
+          icon: Icon(Icons.photo_album), label: photoString),
       BottomNavigationBarItem(
         icon: Icon(Icons.video_library),
         label: videoString,

@@ -12,13 +12,18 @@ typedef void BottomNavigationIndex(int index);
 class PageViewMedia extends StatelessWidget {
   final PageController pageController;
   final BottomNavigationIndex pageCallback;
-  PageViewMedia({this.pageController, this.pageCallback});
+  PageViewMedia({
+    required this.pageController,
+    required this.pageCallback,
+  });
+
   @override
   Widget build(BuildContext context) {
     return PageView(
       controller: pageController,
       onPageChanged: (int page) {
-        BlocProvider.of<MediaListBloc>(context).add(MediaListTypeChangeEvent(mediaTypeCode: page));
+        BlocProvider.of<MediaListBloc>(context)
+            .add(MediaListTypeChangeEvent(mediaTypeCode: page));
         pageCallback(page);
       },
       children: [
@@ -37,7 +42,7 @@ class PageViewMedia extends StatelessWidget {
 
 class MediaPage extends StatefulWidget {
   final int mediaTypeCode;
-  MediaPage({this.mediaTypeCode, Key key}) : super(key: key);
+  MediaPage({required this.mediaTypeCode, Key? key}) : super(key: key);
   @override
   _MediaPageState createState() => _MediaPageState();
 }
@@ -45,7 +50,7 @@ class MediaPage extends StatefulWidget {
 class _MediaPageState extends State<MediaPage> {
   ScrollController _scrollController = ScrollController();
   final _scrollThreshold = 300.0;
-  MediaListBloc _mediaListBloc;
+  late MediaListBloc _mediaListBloc;
 
   @override
   void initState() {
@@ -124,7 +129,11 @@ class BuildMediaListWidget extends StatelessWidget {
   final List mediaList;
   final bool hasReachedMax;
   final ScrollController scrollController;
-  BuildMediaListWidget({this.mediaList, this.hasReachedMax, this.scrollController});
+  BuildMediaListWidget({
+    required this.mediaList,
+    required this.hasReachedMax,
+    required this.scrollController,
+  });
   @override
   Widget build(BuildContext context) {
     if (mediaList[0] is Photo) {

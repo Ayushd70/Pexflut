@@ -15,7 +15,7 @@ class FavoriteSuccessState extends FavoriteState {
   final List mediaList;
 
   const FavoriteSuccessState({
-    this.mediaList,
+    required this.mediaList,
   });
 
   @override

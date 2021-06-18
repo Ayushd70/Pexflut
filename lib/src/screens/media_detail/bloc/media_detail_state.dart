@@ -22,14 +22,15 @@ class LoadingFailMediaState extends MediaDetailState {
 
 class ShowMediaState extends MediaDetailState {
   final int mediaType;
-  final Photo photo;
-  final Video video;
-  final List<Photo> relatedPhoto;
-  final List<Video> relatedVideo;
-  ShowMediaState(
-      {this.mediaType,
-        this.photo,
-        this.video,
-        this.relatedPhoto,
-        this.relatedVideo});
+  final Photo? photo;
+  final Video? video;
+  final List<Photo>? relatedPhoto;
+  final List<Video>? relatedVideo;
+  ShowMediaState({
+    required this.mediaType,
+    this.photo,
+    this.video,
+    this.relatedPhoto,
+    this.relatedVideo,
+  });
 }

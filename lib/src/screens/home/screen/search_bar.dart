@@ -120,3 +120,4 @@ AppBar buildSearchBar(TextEditingController textEditingControler) {
       },
     ),
   );
+}

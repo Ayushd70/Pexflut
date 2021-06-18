@@ -14,7 +14,7 @@ class AppNetwork {
     } catch (e) {
       print(e);
     }
-    return null;
+    return {};
   }
 
   Future<List<Photo>> searchImage(String keyWord, int page) async {
@@ -22,7 +22,7 @@ class AppNetwork {
     var images = <Photo>[];
     data = await _sendRequest(
         'https://api.pexels.com/v1/search?query=$keyWord&per_page=$per_page&page=$page');
-    for (Map map in data['photos']) {
+    for (Map<String, dynamic> map in data['photos']) {
       images.add(Photo.fromMap(map));
     }
     return images;
@@ -33,7 +33,7 @@ class AppNetwork {
     var images = <Photo>[];
     data = await _sendRequest(
         'https://api.pexels.com/v1/curated?per_page=$per_page&page=$page');
-    for (Map map in data['photos']) {
+    for (Map<String, dynamic> map in data['photos']) {
       images.add(Photo.fromMap(map));
     }
     return images;
@@ -44,7 +44,7 @@ class AppNetwork {
     var videos = <Video>[];
     data = await _sendRequest(
         'https://api.pexels.com/videos/search?query=$keyWord&per_page=$per_page&page=$page');
-    for (Map map in data['videos']) {
+    for (Map<String, dynamic> map in data['videos']) {
       videos.add(Video.fromMap(map));
     }
     return videos;
@@ -55,7 +55,7 @@ class AppNetwork {
     var videos = <Video>[];
     data = await _sendRequest(
         'https://api.pexels.com/videos/popular?per_page=$per_page&page=$page');
-    for (Map map in data['videos']) {
+    for (Map<String, dynamic> map in data['videos']) {
       videos.add(Video.fromMap(map));
     }
     return videos;

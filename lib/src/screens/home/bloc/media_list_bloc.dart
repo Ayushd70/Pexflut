@@ -41,10 +41,10 @@ class MediaListBloc extends Bloc<MediaListEvent, MediaListState> {
     if (event is MediaListFetchedEvent && !_hasReachedMax(currentState)) {
       try {
         if (currentState is MediaListInitialState) {
-          final List<Photo> nextPhotos = await mediaRepository.fetchData(
-              mediaType: photoCode, page: 1, keyWord: keyWord);
-          final List<Video> nextVideos = await mediaRepository.fetchData(
-              mediaType: videoCode, page: 1, keyWord: keyWord);
+          final nextPhotos = List.castFrom<dynamic, Photo>(await mediaRepository
+              .fetchData(mediaType: photoCode, page: 1, keyWord: keyWord));
+          final nextVideos = List.castFrom<dynamic, Video>(await mediaRepository
+              .fetchData(mediaType: videoCode, page: 1, keyWord: keyWord));
 
           yield MediaListSuccessState(
               photos: nextPhotos, videos: nextVideos, hasReachedMax: false);
@@ -55,10 +55,11 @@ class MediaListBloc extends Bloc<MediaListEvent, MediaListState> {
         }
         if (currentState is MediaListSuccessState) {
           if (mediaTypeCode == photoCode) {
-            final List<Photo> nextPhotos = await mediaRepository.fetchData(
-                mediaType: mediaTypeCode,
-                page: currentPhotoPage + 1,
-                keyWord: keyWord);
+            final nextPhotos = List.castFrom<dynamic, Photo>(
+                await mediaRepository.fetchData(
+                    mediaType: mediaTypeCode,
+                    page: currentPhotoPage + 1,
+                    keyWord: keyWord));
 
             if (nextPhotos.isEmpty)
               yield currentState.copyWith(hasReachedMax: true);
@@ -75,10 +76,11 @@ class MediaListBloc extends Bloc<MediaListEvent, MediaListState> {
               return;
             }
           } else {
-            final List<Video> nextVideos = await mediaRepository.fetchData(
-                mediaType: mediaTypeCode,
-                page: currentVideoPage + 1,
-                keyWord: keyWord);
+            final nextVideos = List.castFrom<dynamic, Video>(
+                await mediaRepository.fetchData(
+                    mediaType: mediaTypeCode,
+                    page: currentVideoPage + 1,
+                    keyWord: keyWord));
 
             if (nextVideos.isEmpty)
               yield currentState.copyWith(hasReachedMax: true);

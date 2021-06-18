@@ -1,7 +1,11 @@
 import 'package:equatable/equatable.dart';
 
 class VideoPicture extends Equatable {
-  VideoPicture({this.id, this.picture, this.nr});
+  VideoPicture({
+    required this.id,
+    required this.picture,
+    required this.nr,
+  });
 
   final int id;
   final String picture;
