@@ -63,39 +63,102 @@ class MediaListBloc extends Bloc<MediaListEvent, MediaListState> {
 
   Stream<MediaListState> _fetchingData(int mediaType) async* {
     yield FetchingState();
+
     if (mediaType == photoCode) {
-      photos += await mediaRepository.fetchData(
-          mediaType: photoCode, page: imagePage + 1, keyWord: keyWord);
-      imagePage += 1;
-      print('photos.length = ${photos.length}');
+      List<Photo> nextPhotos;
+      try {
+        nextPhotos = await mediaRepository.fetchData(
+            mediaType: photoCode, page: imagePage + 1, keyWord: keyWord);
+      } catch (e) {
+        yield FetchingFailState();
+        return;
+      }
+      if (nextPhotos.isEmpty) {
+        yield ShowListState(
+            photos: photos,
+            videos: videos,
+            mediaType: mediaType,
+            reachMax: true);
+      } else {
+        photos.addAll(nextPhotos);
+        imagePage += 1;
+        print('photos.length = ${photos.length}');
+        photos = await checkFavoriteList(photos);
+        yield ShowListState(
+            photos: photos, videos: videos, mediaType: mediaType);
+      }
     } else {
-      videos += await mediaRepository.fetchData(
-          mediaType: videoCode, page: videoPage + 1, keyWord: keyWord);
-      videoPage += 1;
-      print('videos.length = ${videos.length}');
+      List<Video> nextVideos;
+      try {
+        nextVideos = await mediaRepository.fetchData(
+            mediaType: videoCode, page: videoPage + 1, keyWord: keyWord);
+      } catch (e) {
+        yield FetchingFailState();
+        return;
+      }
+      if (nextVideos.isEmpty) {
+        yield ShowListState(
+            photos: photos,
+            videos: videos,
+            mediaType: mediaType,
+            reachMax: true);
+      } else {
+        videos.addAll(nextVideos);
+        videoPage += 1;
+        print('videos.length = ${videos.length}');
+        videos = await checkFavoriteList(videos);
+        yield ShowListState(
+            photos: photos, videos: videos, mediaType: mediaType);
+      }
     }
-    photos = await checkFavoriteList(photos);
-    yield ShowListState(photos: photos, videos: videos, mediaType: mediaType);
   }
 
   Stream<MediaListState> _fetchingInitialData(int mediaType) async* {
     if (mediaType == photoCode) {
       if (photos.isEmpty) {
         yield FetchingState();
-        photos += await mediaRepository.fetchData(
-            mediaType: photoCode, page: imagePage + 1, keyWord: keyWord);
-        imagePage += 1;
+        List<Photo> nextPhotos;
+        try {
+          nextPhotos += await mediaRepository.fetchData(
+              mediaType: photoCode, page: imagePage + 1, keyWord: keyWord);
+        } catch (e) {
+          yield FetchingFailState();
+          return;
+        }
+        if (nextPhotos.isEmpty) {
+          yield NoMatchingResultState();
+        } else {
+          photos.addAll(nextPhotos);
+          imagePage += 1;
+          print('photos.length = ${photos.length}');
+          photos = await checkFavoriteList(photos);
+          yield ShowListState(
+              photos: photos, videos: videos, mediaType: mediaType);
+        }
       }
     } else {
       if (videos.isEmpty) {
         yield FetchingState();
-        videos += await mediaRepository.fetchData(
-            mediaType: videoCode, page: videoPage + 1, keyWord: keyWord);
-        videoPage += 1;
+        List<Video> nextVideos;
+        try {
+          nextVideos = await mediaRepository.fetchData(
+              mediaType: videoCode, page: videoPage + 1, keyWord: keyWord);
+        } catch (e) {
+          yield FetchingFailState();
+          return;
+        }
+        if (nextVideos.isEmpty) {
+          yield NoMatchingResultState();
+        } else {
+          videos.addAll(nextVideos);
+          videoPage += 1;
+          print('videos.length = ${videos.length}');
+          videos = await checkFavoriteList(videos);
+          yield ShowListState(
+              photos: photos, videos: videos, mediaType: mediaType);
+        }
       }
     }
-    videos = await checkFavoriteList(videos);
-    yield ShowListState(photos: photos, videos: videos, mediaType: mediaType);
   }
 
   Future<List> checkFavoriteList(List mediaList) async {

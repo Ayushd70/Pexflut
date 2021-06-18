@@ -52,6 +52,16 @@ class _ListMediaState extends State<ListMedia> {
         if (state is FetchingState) {
           return Center(child: CircularProgressIndicator());
         }
+        if (state is FetchingFailState) {
+          return Center(
+            child: Text('Failed to get data'),
+          );
+        }
+        if (state is NoMatchingResultState) {
+          return Center(
+            child: Text('No matching result'),
+          );
+        }
 
         if (state is ShowListState) {
           return GridView.extent(
