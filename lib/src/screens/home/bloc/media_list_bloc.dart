@@ -1,3 +1,4 @@
+import 'package:pex_flut/resource/resources.dart';
 import 'package:pex_flut/src/model/image.dart';
 import 'package:pex_flut/src/model/video.dart';
 import '../../../data/repository/media_repository.dart';
@@ -5,9 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'media_list_event.dart';
 import 'media_list_state.dart';
 import 'package:rxdart/rxdart.dart';
-
-const photoCode = 0;
-const videoCode = 1;
 
 class MediaListBloc extends Bloc<MediaListEvent, MediaListState> {
   MediaRepository mediaRepository = MediaRepository();
@@ -36,17 +34,8 @@ class MediaListBloc extends Bloc<MediaListEvent, MediaListState> {
     if (event is MediaListTypeChangeEvent) {
       mediaTypeCode = event.mediaTypeCode;
 
-      yield mediaTypeCode == photoCode
-          ? MediaListSuccessState(
-          photos: photos,
-          videos: videos,
-          hasReachedMax: false,
-          restart: false)
-          : MediaListSuccessState(
-          photos: photos,
-          videos: videos,
-          hasReachedMax: false,
-          restart: false);
+      yield MediaListSuccessState(
+          photos: photos, videos: videos, hasReachedMax: false);
     }
 
     if (event is MediaListFetchedEvent && !_hasReachedMax(currentState)) {
@@ -58,10 +47,7 @@ class MediaListBloc extends Bloc<MediaListEvent, MediaListState> {
               mediaType: videoCode, page: 1, keyWord: keyWord);
 
           yield MediaListSuccessState(
-              photos: nextPhotos,
-              videos: nextVideos,
-              hasReachedMax: false,
-              restart: false);
+              photos: nextPhotos, videos: nextVideos, hasReachedMax: false);
           photos.addAll(nextPhotos);
           videos.addAll(nextVideos);
 
@@ -80,8 +66,7 @@ class MediaListBloc extends Bloc<MediaListEvent, MediaListState> {
               yield MediaListSuccessState(
                   photos: photos + nextPhotos,
                   videos: videos,
-                  hasReachedMax: false,
-                  restart: false);
+                  hasReachedMax: false);
 
               currentPhotoPage += 1;
               photos.addAll(nextPhotos);
@@ -101,8 +86,7 @@ class MediaListBloc extends Bloc<MediaListEvent, MediaListState> {
               yield MediaListSuccessState(
                   photos: photos,
                   videos: videos + nextVideos,
-                  hasReachedMax: false,
-                  restart: false);
+                  hasReachedMax: false);
 
               currentVideoPage += 1;
               videos.addAll(nextVideos);
@@ -136,7 +120,7 @@ class MediaListBloc extends Bloc<MediaListEvent, MediaListState> {
             : videos[event.index].liked = true;
       }
       yield MediaListSuccessState(
-          photos: photos, videos: videos, hasReachedMax: false, restart: false);
+          photos: photos, videos: videos, hasReachedMax: false);
       print(await mediaRepository.mediaData());
     }
   }

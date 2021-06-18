@@ -2,14 +2,14 @@ import 'package:equatable/equatable.dart';
 
 class ImageSrc extends Equatable {
   ImageSrc(
-      {required this.original,
-      required this.large,
-      required this.large2x,
-      required this.medium,
-      required this.small,
-      required this.portrait,
-      required this.landscape,
-      required this.tiny});
+      {this.original,
+        this.large,
+        this.large2x,
+        this.medium,
+        this.small,
+        this.portrait,
+        this.landscape,
+        this.tiny});
   final String original;
   final String large;
   final String large2x;

@@ -7,7 +7,7 @@ class AppDatabase {
     final Database db = await DBProvider.db.database;
     var count = firstIntValue(await db.query('media_data',
         columns: ['COUNT(*)'], where: 'mediaID = ?', whereArgs: [mediaID]));
-    if (count! > 0) return null;
+    if (count > 0) return null;
 
     await db.insert(
       'media_data',
@@ -42,7 +42,7 @@ class AppDatabase {
         columns: ['COUNT(*)'],
         where: 'mediaTypeCode = ? AND mediaID = ?',
         whereArgs: [mediaTypeCode, mediaID]));
-    return count! > 0;
+    return count > 0;
   }
 }
 

@@ -1,9 +1,10 @@
+import 'package:pex_flut/resource/resources.dart';
 import 'package:pex_flut/src/model/image.dart';
-import 'package:pex_flut/src/screens/home/screen/media_widget.dart';
+import '../bloc/favorite_event.dart';
+import '../bloc/favorite_state.dart';
 import '../bloc/favorite_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'media_widget.dart';
 
 class FavoriteScreen extends StatefulWidget {
@@ -15,7 +16,10 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          iconTheme: IconThemeData(color: Colors.black),
+        ),
         body: BlocProvider(
           create: (BuildContext context) =>
           FavoriteBloc()..add(FavoriteFetchEvent()),
@@ -36,13 +40,13 @@ class MediaFavoriteList extends StatelessWidget {
         }
         if (state is FavoriteFailureState) {
           return Center(
-            child: Text('failed to fetch MediaLists'),
+            child: Text(connectFail),
           );
         }
         if (state is FavoriteSuccessState) {
           if (state.mediaList.isEmpty) {
             return Center(
-              child: Text('no MediaLists'),
+              child: Text(noResult),
             );
           }
           return GridView.builder(
@@ -57,7 +61,7 @@ class MediaFavoriteList extends StatelessWidget {
           );
         } else
           return Center(
-            child: Text('Something wrong'),
+            child: Text(otherError),
           );
       },
     );

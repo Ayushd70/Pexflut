@@ -1,33 +1,8 @@
+import 'package:pex_flut/resource/resources.dart';
 import 'package:pex_flut/src/data/repository/media_repository.dart';
-import 'package:pex_flut/src/screens/home/bloc/media_list_bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-abstract class FavoriteEvent {}
-
-class FavoriteFetchEvent extends FavoriteEvent {}
-
-abstract class FavoriteState extends Equatable {
-  const FavoriteState();
-
-  @override
-  List<Object> get props => [];
-}
-
-class FavoriteInitialState extends FavoriteState {}
-
-class FavoriteFailureState extends FavoriteState {}
-
-class FavoriteSuccessState extends FavoriteState {
-  final List mediaList;
-
-  const FavoriteSuccessState({
-    required this.mediaList,
-  });
-
-  @override
-  List<Object> get props => [mediaList];
-}
+import 'favorite_event.dart';
+import 'favorite_state.dart';
 
 class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
   FavoriteBloc() : super(FavoriteInitialState());
@@ -36,6 +11,10 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
 
   @override
   Stream<FavoriteState> mapEventToState(FavoriteEvent event) async* {
+    if (event is DislikeEvent) {
+      await mediaRepository.delete(event.mediaTypeCode, event.mediaID);
+      print('deteted');
+    }
     if (event is FavoriteFetchEvent) {
       try {
         var data = await mediaRepository.mediaData();
@@ -49,7 +28,6 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
             mediaList.add(media);
           }
         }
-        print(mediaList);
 
         yield FavoriteSuccessState(mediaList: mediaList);
       } catch (_) {

@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class VideoUser extends Equatable {
-  VideoUser({required this.id, required this.name, required this.url});
+  VideoUser({this.id, this.name, this.url});
   final int id;
   final String name;
   final String url;

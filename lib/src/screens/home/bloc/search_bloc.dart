@@ -18,7 +18,7 @@ class BackArrowEvent extends MediaSearchEvent {
 
 class SubmitEvent extends MediaSearchEvent {
   final String keyWord;
-  SubmitEvent({required this.keyWord});
+  SubmitEvent({this.keyWord});
   @override
   List<Object> get props => [keyWord];
 }
@@ -36,14 +36,14 @@ class InitialSearchState extends MediaSearchState {
 
 class TypingState extends MediaSearchState {
   final String keyWord;
-  TypingState({required this.keyWord});
+  TypingState({this.keyWord});
   @override
   List<Object> get props => [keyWord];
 }
 
 class SearchedState extends MediaSearchState {
   final String keyWord;
-  SearchedState({required this.keyWord});
+  SearchedState({this.keyWord});
   @override
   List<Object> get props => [keyWord];
 }

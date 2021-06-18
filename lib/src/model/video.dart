@@ -6,15 +6,15 @@ import 'package:equatable/equatable.dart';
 // ignore: must_be_immutable
 class Video extends Equatable {
   Video(
-      {required this.id,
-      required this.width,
-      required this.height,
-      required this.url,
-      required this.image,
-      required this.duration,
-      required this.user,
-      required this.videoFiles,
-      required this.videoPictures});
+      {this.id,
+        this.width,
+        this.height,
+        this.url,
+        this.image,
+        this.duration,
+        this.user,
+        this.videoFiles,
+        this.videoPictures});
 
   final int id;
   final int width;
@@ -50,16 +50,16 @@ class Video extends Equatable {
 
   @override
   List<Object> get props => [
-        id,
-        width,
-        height,
-        url,
-        image,
-        duration,
-        user,
-        videoFiles,
-        videoPictures
-      ];
+    id,
+    width,
+    height,
+    url,
+    image,
+    duration,
+    user,
+    videoFiles,
+    videoPictures
+  ];
 
   @override
   String toString() => '''

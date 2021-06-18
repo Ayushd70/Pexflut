@@ -42,7 +42,7 @@ class MediaRepository {
     return appNetwork.searchVideo(keyWord, 1);
   }
 
-  Future<List> fetchData({int? mediaType, int? page, String? keyWord}) async {
+  Future<List> fetchData({int mediaType, int page, String keyWord}) async {
     if (mediaType == 0 && keyWord != '') {
       return await searchImage(keyWord, page);
     } else if (mediaType == 1 && keyWord != '') {

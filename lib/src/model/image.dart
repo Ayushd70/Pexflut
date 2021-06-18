@@ -1,18 +1,17 @@
 import 'package:equatable/equatable.dart';
-
 import 'image_src.dart';
 
 // ignore: must_be_immutable
 class Photo extends Equatable {
   Photo(
-      {required this.id,
-      required this.width,
-      required this.height,
-      required this.url,
-      required this.photographer,
-      required this.photographerUrl,
-      required this.photographerId,
-      required this.src});
+      {this.id,
+        this.width,
+        this.height,
+        this.url,
+        this.photographer,
+        this.photographerUrl,
+        this.photographerId,
+        this.src});
   final int id;
   final int width;
   final int height;
@@ -35,15 +34,15 @@ class Photo extends Equatable {
 
   @override
   List<Object> get props => [
-        id,
-        width,
-        height,
-        url,
-        photographer,
-        photographerUrl,
-        photographerId,
-        src
-      ];
+    id,
+    width,
+    height,
+    url,
+    photographer,
+    photographerUrl,
+    photographerId,
+    src
+  ];
 
   @override
   String toString() => '''

@@ -1,4 +1,6 @@
-import 'package:pex_flut/src/screens/home/bloc/media_list_bloc.dart';
+import 'package:pex_flut/resource/resources.dart';
+import '../bloc/media_detail_event.dart';
+import '../bloc/media_detail_state.dart';
 import 'photo_show_screen.dart';
 import '../bloc/media_detail_bloc.dart';
 import 'video_play_screen.dart';
@@ -25,6 +27,7 @@ class MediaDetail extends StatelessWidget {
   final String mediaType;
   final String mediaKey;
   MediaDetail(this.mediaType, this.mediaKey);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +54,7 @@ class MediaDetail extends StatelessWidget {
                 return VideoPlayerScreen(state: state);
               }
             } else {
-              return Text('Something wrong');
+              return Text(otherError);
             }
           }),
     );

@@ -1,20 +1,22 @@
+import 'package:pex_flut/resource/resources.dart';
 import 'package:pex_flut/src/model/image.dart';
-import 'package:pex_flut/src/screens/home/bloc/media_list_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../bloc/media_detail_event.dart';
+import '../bloc/media_detail_state.dart';
 import 'package:rubber/rubber.dart';
 import '../bloc/media_detail_bloc.dart';
 import 'package:flutter/material.dart';
 
 class PhotoShowScreen extends StatefulWidget {
   final ShowMediaState state;
-  PhotoShowScreen({required this.state});
+  PhotoShowScreen({this.state});
   @override
   _PhotoShowScreenState createState() => _PhotoShowScreenState();
 }
 
 class _PhotoShowScreenState extends State<PhotoShowScreen>
     with SingleTickerProviderStateMixin {
-  late RubberAnimationController _controller;
+  RubberAnimationController _controller;
 
   @override
   void initState() {
@@ -118,16 +120,27 @@ class _PhotoShowScreenState extends State<PhotoShowScreen>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      widget.state.photo.photographer,
-                      style: TextStyle(fontSize: 20),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.state.photo.photographer,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                            'Size: ${widget.state.photo.width} x ${widget.state.photo.height}')
+                      ],
                     ),
                     IconButton(
                       onPressed: () {
-                        BlocProvider.of<MediaDetailBloc>(context)
-                            .add(LikedEvent(media: widget.state.photo));
-                        Future.delayed(Duration(milliseconds: 20));
-                        setState(() {});
+                        BlocProvider.of<MediaDetailBloc>(context).add(
+                            LikedEvent(
+                                mediaTypeCode: photoCode,
+                                mediaID: widget.state.photo.id));
                       },
                       icon: Icon(
                         widget.state.photo.liked
@@ -173,9 +186,18 @@ class _PhotoShowScreenState extends State<PhotoShowScreen>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      widget.state.photo.photographer,
-                      style: TextStyle(fontSize: 20),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.state.photo.photographer,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                            'Size: ${widget.state.photo.width} x ${widget.state.photo.height}')
+                      ],
                     ),
                     IconButton(
                       icon: Icon(
@@ -185,8 +207,10 @@ class _PhotoShowScreenState extends State<PhotoShowScreen>
                         color: Colors.red,
                       ),
                       onPressed: () {
-                        BlocProvider.of<MediaDetailBloc>(context)
-                            .add(LikedEvent(media: widget.state.photo));
+                        BlocProvider.of<MediaDetailBloc>(context).add(
+                            LikedEvent(
+                                mediaTypeCode: photoCode,
+                                mediaID: widget.state.photo.id));
                       },
                     ),
                   ],

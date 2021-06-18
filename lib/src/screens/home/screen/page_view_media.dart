@@ -1,3 +1,4 @@
+import 'package:pex_flut/resource/resources.dart';
 import 'package:pex_flut/src/model/image.dart';
 import '../bloc/media_list_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,37 +7,45 @@ import '../bloc/media_list_bloc.dart';
 import 'package:flutter/material.dart';
 import 'media_widget.dart';
 
+typedef void BottomNavigationIndex(int index);
+
 class PageViewMedia extends StatelessWidget {
-  final PageStorageBucket _bucket = PageStorageBucket();
+  final PageController pageController;
+  final BottomNavigationIndex pageCallback;
+  PageViewMedia({this.pageController, this.pageCallback});
   @override
   Widget build(BuildContext context) {
-    return PageStorage(
-      bucket: _bucket,
-      child: PageView(
-        onPageChanged: (int page) {
-          BlocProvider.of<MediaListBloc>(context)
-              .add(MediaListTypeChangeEvent(mediaTypeCode: page));
-        },
-        children: [
-          MediaPage(mediaTypeCode: photoCode, key: PageStorageKey('photo')),
-          MediaPage(mediaTypeCode: videoCode, key: PageStorageKey('video')),
-        ],
-      ),
+    return PageView(
+      controller: pageController,
+      onPageChanged: (int page) {
+        BlocProvider.of<MediaListBloc>(context).add(MediaListTypeChangeEvent(mediaTypeCode: page));
+        pageCallback(page);
+      },
+      children: [
+        MediaPage(
+          mediaTypeCode: photoCode,
+          key: PageStorageKey('photo'),
+        ),
+        MediaPage(
+          mediaTypeCode: videoCode,
+          key: PageStorageKey('video'),
+        ),
+      ],
     );
   }
 }
 
 class MediaPage extends StatefulWidget {
   final int mediaTypeCode;
-  MediaPage({required this.mediaTypeCode, Key? key}) : super(key: key);
+  MediaPage({this.mediaTypeCode, Key key}) : super(key: key);
   @override
   _MediaPageState createState() => _MediaPageState();
 }
 
 class _MediaPageState extends State<MediaPage> {
   ScrollController _scrollController = ScrollController();
-  final _scrollThreshold = 200.0;
-  late MediaListBloc _mediaListBloc;
+  final _scrollThreshold = 300.0;
+  MediaListBloc _mediaListBloc;
 
   @override
   void initState() {
@@ -47,7 +56,8 @@ class _MediaPageState extends State<MediaPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MediaListBloc, MediaListState>(
+    return BlocConsumer<MediaListBloc, MediaListState>(
+      listener: (context, state) {},
       builder: (context, state) {
         if (state is MediaListInitialState) {
           _mediaListBloc.add(MediaListFetchedEvent());
@@ -57,20 +67,20 @@ class _MediaPageState extends State<MediaPage> {
         }
         if (state is MediaListFailureState) {
           return Center(
-            child: Text('failed to fetch MediaLists'),
+            child: Text(connectFail),
           );
         }
         if (state is MediaListSuccessState) {
           if (widget.mediaTypeCode == photoCode) {
             if (state.photos.isEmpty) {
               return Center(
-                child: Text('no MediaLists'),
+                child: Text(noResult),
               );
             }
           } else {
             if (state.videos.isEmpty) {
               return Center(
-                child: Text('no MediaLists'),
+                child: Text(noResult),
               );
             }
           }
@@ -88,7 +98,7 @@ class _MediaPageState extends State<MediaPage> {
           );
         } else
           return Center(
-            child: Text('Something wrong'),
+            child: Text(otherError),
           );
       },
     );
@@ -103,6 +113,7 @@ class _MediaPageState extends State<MediaPage> {
   void _onScroll() {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
+
     if (maxScroll - currentScroll <= _scrollThreshold) {
       _mediaListBloc.add(MediaListFetchedEvent());
     }
@@ -113,8 +124,7 @@ class BuildMediaListWidget extends StatelessWidget {
   final List mediaList;
   final bool hasReachedMax;
   final ScrollController scrollController;
-  BuildMediaListWidget(
-      {required this.mediaList, required this.hasReachedMax, required this.scrollController});
+  BuildMediaListWidget({this.mediaList, this.hasReachedMax, this.scrollController});
   @override
   Widget build(BuildContext context) {
     if (mediaList[0] is Photo) {
