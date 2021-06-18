@@ -118,37 +118,25 @@ class MediaListBloc extends Bloc<MediaListEvent, MediaListState> {
     }
 
     if (event is SearchMediaEvent) {
-      yield MediaListInitialState();
       keyWord = event.keyWord;
       _resetData();
-      try {
-        final List<Photo> nextPhotos = await mediaRepository.fetchData(
-            mediaType: photoCode, page: 1, keyWord: keyWord);
-        final List<Video> nextVideos = await mediaRepository.fetchData(
-            mediaType: videoCode, page: 1, keyWord: keyWord);
-
-        yield MediaListSuccessState(
-            photos: nextPhotos,
-            videos: nextVideos,
-            hasReachedMax: false,
-            restart: true);
-        photos.addAll(nextPhotos);
-        videos.addAll(nextVideos);
-        print('Event is ${event.runtimeType}');
-        print('photos.length is ${photos.length}');
-        print('videos.length is ${videos.length}');
-        return;
-      } catch (_) {
-        yield MediaListFailureState();
-      }
+      yield MediaListInitialState();
     }
 
     if (event is LikeMediaEvent) {
       if (await mediaRepository.isContain(event.mediaTypeCode, event.mediaID)) {
         await mediaRepository.delete(event.mediaTypeCode, event.mediaID);
+        event.mediaTypeCode == photoCode
+            ? photos[event.index].liked = false
+            : videos[event.index].liked = false;
       } else {
         await mediaRepository.insert(event.mediaTypeCode, event.mediaID);
+        event.mediaTypeCode == photoCode
+            ? photos[event.index].liked = true
+            : videos[event.index].liked = true;
       }
+      yield MediaListSuccessState(
+          photos: photos, videos: videos, hasReachedMax: false, restart: false);
       print(await mediaRepository.mediaData());
     }
   }

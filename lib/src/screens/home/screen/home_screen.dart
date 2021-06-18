@@ -1,5 +1,4 @@
 import 'page_view_media.dart';
-import '../bloc/media_list_event.dart';
 import '../bloc/search_bloc.dart';
 import '../bloc/media_list_bloc.dart';
 import 'package:flutter/material.dart';
@@ -28,8 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
           create: (BuildContext context) => MediaSearchBloc(),
         ),
         BlocProvider<MediaListBloc>(
-          create: (BuildContext context) =>
-          MediaListBloc()..add(MediaListFetchedEvent()),
+          create: (BuildContext context) => MediaListBloc(),
         ),
       ],
       child: Scaffold(

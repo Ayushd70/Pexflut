@@ -34,7 +34,7 @@ class MediaPage extends StatefulWidget {
 }
 
 class _MediaPageState extends State<MediaPage> {
-  ScrollController  _scrollController = ScrollController();
+  ScrollController _scrollController = ScrollController();
   final _scrollThreshold = 200.0;
   late MediaListBloc _mediaListBloc;
 
@@ -50,6 +50,7 @@ class _MediaPageState extends State<MediaPage> {
     return BlocBuilder<MediaListBloc, MediaListState>(
       builder: (context, state) {
         if (state is MediaListInitialState) {
+          _mediaListBloc.add(MediaListFetchedEvent());
           return Center(
             child: CircularProgressIndicator(),
           );
@@ -123,7 +124,10 @@ class BuildMediaListWidget extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return index >= mediaList.length
               ? BottomLoader()
-              : BuildMediaWidget(photo: mediaList[index]);
+              : BuildMediaWidget(
+            photo: mediaList[index],
+            index: index,
+          );
         },
         itemCount: hasReachedMax ? mediaList.length : mediaList.length + 1,
         controller: scrollController,
@@ -135,7 +139,10 @@ class BuildMediaListWidget extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return index >= mediaList.length
               ? BottomLoader()
-              : BuildMediaWidget(video: mediaList[index]);
+              : BuildMediaWidget(
+            video: mediaList[index],
+            index: index,
+          );
         },
         itemCount: hasReachedMax ? mediaList.length : mediaList.length + 1,
         controller: scrollController,

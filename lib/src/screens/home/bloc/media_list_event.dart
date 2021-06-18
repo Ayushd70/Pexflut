@@ -22,7 +22,8 @@ class SearchMediaEvent extends MediaListEvent {
 class LikeMediaEvent extends MediaListEvent {
   final int mediaTypeCode;
   final int mediaID;
-  LikeMediaEvent({required this.mediaTypeCode, required this.mediaID});
+  final int index;
+  LikeMediaEvent({required this.mediaTypeCode, required this.mediaID, required this.index});
   @override
-  List<Object> get props => [mediaTypeCode, mediaID];
+  List<Object> get props => [mediaTypeCode, mediaID, index];
 }
