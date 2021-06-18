@@ -1,7 +1,7 @@
 import 'package:pex_flut/src/data/repository/media_repository.dart';
-import 'package:pex_flut/src/models/image.dart';
-import 'package:pex_flut/src/models/video.dart';
-import 'package:pex_flut/src/screen/home/bloc/media_list_bloc.dart';
+import 'package:pex_flut/src/model/image.dart';
+import 'package:pex_flut/src/model/video.dart';
+import 'package:pex_flut/src/screens/home/bloc/media_list_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -59,7 +59,14 @@ class MediaDetailBloc extends Bloc<MediaDetailEvent, MediaDetailState> {
   @override
   Stream<MediaDetailState> mapEventToState(MediaDetailEvent event) async* {
     if (event is LikedEvent) {
-      await mediaRepository.insert(event.media.id);
+      if (await mediaRepository.isContain(event.media.id)) {
+        await mediaRepository.delete(event.media.id);
+        print('deleted');
+      } else {
+        await mediaRepository.insert(event.media.id);
+        print('added');
+      }
+      yield ShowMediaState();
     }
     if (event is InitialMediaDetailEvent) {
       yield LoadingMediaState();

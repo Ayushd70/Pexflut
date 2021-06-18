@@ -1,4 +1,4 @@
-import 'package:pex_flut/src/screen/home/screen/home_screen.dart';
+import 'package:pex_flut/src/screens/home/screen/home_screen.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 

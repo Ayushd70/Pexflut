@@ -1,4 +1,4 @@
-import 'package:pex_flut/src/screen/media_details/bloc/media_detail_bloc.dart';
+import 'package:pex_flut/src/screens/media_details/bloc/media_detail_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
@@ -82,7 +82,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
                       IconButton(
                         icon: Icon(
                           widget.state.video.liked
-                              ? Icons.favorite_border
+                              ? Icons.favorite
                               : Icons.favorite_border,
                           color: Colors.red,
                         ),

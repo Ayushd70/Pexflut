@@ -1,4 +1,4 @@
-import 'package:pex_flut/src/screen/home/bloc/media_list_bloc.dart';
+import 'package:pex_flut/src/screens/home/bloc/media_list_bloc.dart';
 import 'photo_show_screen.dart';
 import '../bloc/media_detail_bloc.dart';
 import 'video_play_screen.dart';

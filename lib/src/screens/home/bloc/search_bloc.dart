@@ -1,60 +1,60 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-abstract class PhotoSearchEvent extends Equatable {
-  PhotoSearchEvent();
+abstract class MediaSearchEvent extends Equatable {
+  MediaSearchEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class SearchButtonEvent extends PhotoSearchEvent {
+class SearchButtonEvent extends MediaSearchEvent {
   SearchButtonEvent();
 }
 
-class BackArrowEvent extends PhotoSearchEvent {
+class BackArrowEvent extends MediaSearchEvent {
   BackArrowEvent();
 }
 
-class SubmitEvent extends PhotoSearchEvent {
+class SubmitEvent extends MediaSearchEvent {
   final String keyWord;
   SubmitEvent({required this.keyWord});
   @override
   List<Object> get props => [keyWord];
 }
 
-abstract class PhotoSearchState extends Equatable {
-  PhotoSearchState();
+abstract class MediaSearchState extends Equatable {
+  MediaSearchState();
 
   @override
   List<Object> get props => [];
 }
 
-class InitialSearchState extends PhotoSearchState {
+class InitialSearchState extends MediaSearchState {
   InitialSearchState();
 }
 
-class TypingState extends PhotoSearchState {
+class TypingState extends MediaSearchState {
   final String keyWord;
   TypingState({required this.keyWord});
   @override
   List<Object> get props => [keyWord];
 }
 
-class SearchedState extends PhotoSearchState {
+class SearchedState extends MediaSearchState {
   final String keyWord;
   SearchedState({required this.keyWord});
   @override
   List<Object> get props => [keyWord];
 }
 
-class PhotoSearchBloc extends Bloc<PhotoSearchEvent, PhotoSearchState> {
+class MediaSearchBloc extends Bloc<MediaSearchEvent, MediaSearchState> {
   String keyWord = '';
-  PhotoSearchBloc() : super(InitialSearchState());
+  MediaSearchBloc() : super(InitialSearchState());
   @override
-  Stream<PhotoSearchState> mapEventToState(PhotoSearchEvent event) async* {
+  Stream<MediaSearchState> mapEventToState(MediaSearchEvent event) async* {
     if (event is SearchButtonEvent) {
-      yield TypingState(keyWord: '');
+      yield TypingState();
     }
     if (event is BackArrowEvent) {
       yield InitialSearchState();

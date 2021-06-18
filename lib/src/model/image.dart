@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 
 import 'image_src.dart';
 
+// ignore: must_be_immutable
 class Photo extends Equatable {
   Photo(
       {required this.id,

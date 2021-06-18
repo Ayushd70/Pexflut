@@ -1,5 +1,5 @@
-import 'package:pex_flut/src/models/image.dart';
-import 'package:pex_flut/src/screen/home/bloc/media_list_bloc.dart';
+import 'package:pex_flut/src/model/image.dart';
+import 'package:pex_flut/src/screens/home/bloc/media_list_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rubber/rubber.dart';
 import '../bloc/media_detail_bloc.dart';
@@ -123,16 +123,18 @@ class _PhotoShowScreenState extends State<PhotoShowScreen>
                       style: TextStyle(fontSize: 20),
                     ),
                     IconButton(
-                      icon: Icon(
-                        widget.state.photo.liked
-                            ? Icons.favorite_border
-                            : Icons.favorite_border,
-                        color: Colors.red,
-                      ),
                       onPressed: () {
                         BlocProvider.of<MediaDetailBloc>(context)
                             .add(LikedEvent(media: widget.state.photo));
+                        Future.delayed(Duration(milliseconds: 20));
+                        setState(() {});
                       },
+                      icon: Icon(
+                        widget.state.photo.liked
+                            ? Icons.favorite
+                            : Icons.favorite_border,
+                        color: Colors.red,
+                      ),
                     )
                   ],
                 ),
@@ -178,7 +180,7 @@ class _PhotoShowScreenState extends State<PhotoShowScreen>
                     IconButton(
                       icon: Icon(
                         widget.state.photo.liked
-                            ? Icons.favorite_border
+                            ? Icons.favorite
                             : Icons.favorite_border,
                         color: Colors.red,
                       ),

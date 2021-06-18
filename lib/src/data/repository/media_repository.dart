@@ -1,6 +1,6 @@
 import 'package:pex_flut/src/data/network/app_network.dart';
-import 'package:pex_flut/src/models/image.dart';
-import 'package:pex_flut/src/models/video.dart';
+import 'package:pex_flut/src/model/image.dart';
+import 'package:pex_flut/src/model/video.dart';
 import 'package:pex_flut/src/data/database/app_database.dart';
 
 

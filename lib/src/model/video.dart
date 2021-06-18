@@ -3,6 +3,7 @@ import 'video_picture.dart';
 import 'video_user.dart';
 import 'package:equatable/equatable.dart';
 
+// ignore: must_be_immutable
 class Video extends Equatable {
   Video(
       {required this.id,
