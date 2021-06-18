@@ -1,8 +1,6 @@
 import 'package:pex_flut/src/model/image.dart';
 import 'package:pex_flut/src/model/video.dart';
-import '../bloc/media_list_event.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../bloc/media_list_bloc.dart';
+import 'package:pex_flut/src/screens/home/bloc/media_list_bloc.dart';
 import 'package:flutter/material.dart';
 
 class BuildMediaWidget extends StatelessWidget {
@@ -83,11 +81,7 @@ Widget _buildImageWidget(BuildContext context, Photo photo) {
                     style: TextStyle(fontSize: 20),
                   ),
                   IconButton(
-                    onPressed: () {
-                      BlocProvider.of<MediaListBloc>(context).add(
-                          LikeMediaEvent(
-                              mediaTypeCode: photoCode, mediaID: photo.id));
-                    },
+                    onPressed: () {},
                     icon: Icon(
                       Icons.favorite_border,
                       color: Colors.red,
@@ -171,11 +165,7 @@ Widget _buildVideoWidget(BuildContext context, Video video) {
                       video.liked ? Icons.favorite : Icons.favorite_border,
                       color: Colors.red,
                     ),
-                    onPressed: () {
-                      BlocProvider.of<MediaListBloc>(context).add(
-                          LikeMediaEvent(
-                              mediaTypeCode: videoCode, mediaID: video.id));
-                    },
+                    onPressed: () {},
                   )
                 ],
               ),

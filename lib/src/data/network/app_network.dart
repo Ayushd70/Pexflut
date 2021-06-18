@@ -22,7 +22,7 @@ class AppNetwork {
     Map<String, dynamic> data;
     var images = <Photo>[];
     data = (await _sendRequest(
-        'https://api.pexels.com/v1/search?query=$keyWord&per_page=$per_page&$page'))!;
+        'https://api.pexels.com/v1/search?query=$keyWord&per_page=$per_page&page=$page'))!;
     for (Map map in data['photos']) {
       images.add(Photo.fromMap(map));
     }

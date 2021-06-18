@@ -1,8 +1,7 @@
-import 'package:pex_flut/src/data/network/app_network.dart';
-import 'package:pex_flut/src/model/image.dart';
-import 'package:pex_flut/src/model/video.dart';
-import 'package:pex_flut/src/data/database/app_database.dart';
-
+import '../../data/database/app_database.dart';
+import '../../data/network/app_network.dart';
+import '../../model/image.dart';
+import '../../model/video.dart';
 
 class MediaRepository {
   MediaRepository.privateConstructor();
@@ -43,7 +42,7 @@ class MediaRepository {
     return appNetwork.searchVideo(keyWord, 1);
   }
 
-  Future<List> fetchData({required int mediaType, required int page, required String keyWord}) async {
+  Future<List> fetchData({int? mediaType, int? page, String? keyWord}) async {
     if (mediaType == 0 && keyWord != '') {
       return await searchImage(keyWord, page);
     } else if (mediaType == 1 && keyWord != '') {
@@ -65,19 +64,19 @@ class MediaRepository {
     return appNetwork.getVideo(videoKey);
   }
 
-  Future<void> insert(int id) {
-    return appDatabase.insertMediaData(id);
+  Future<void> insert(int mediaTypeCode, int mediaID) {
+    return appDatabase.insertMediaData(mediaTypeCode, mediaID);
   }
 
-  Future<void> delete(int id) {
-    return appDatabase.deleteMediaData(id);
+  Future<void> delete(int mediaTypeCode, int mediaID) {
+    return appDatabase.deleteMediaData(mediaTypeCode, mediaID);
   }
 
-  Future<bool> isContain(int id) {
-    return appDatabase.isContain(id);
+  Future<bool> isContain(int mediaTypeCode, int mediaID) {
+    return appDatabase.isContain(mediaTypeCode, mediaID);
   }
 
-  Future<List<int>> mediaData() {
+  Future<List<List<int>>> mediaData() {
     return appDatabase.mediaData();
   }
 }

@@ -3,44 +3,46 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqflite/utils/utils.dart';
 
 class AppDatabase {
-  Future<void> insertMediaData(int id) async {
+  Future<void> insertMediaData(int mediaTypeCode, int mediaID) async {
     final Database db = await DBProvider.db.database;
     var count = firstIntValue(await db.query('media_data',
-        columns: ['COUNT(*)'], where: 'id = ?', whereArgs: [id]));
+        columns: ['COUNT(*)'], where: 'mediaID = ?', whereArgs: [mediaID]));
     if (count! > 0) return null;
 
     await db.insert(
       'media_data',
-      {'id': id},
-      conflictAlgorithm: ConflictAlgorithm.replace,
+      {'mediaTypeCode': mediaTypeCode, 'mediaID': mediaID},
+      conflictAlgorithm: ConflictAlgorithm.ignore,
     );
   }
 
-  Future<List<int>> mediaData() async {
+  Future<List<List<int>>> mediaData() async {
     final Database db = await DBProvider.db.database;
 
     final List<Map<String, dynamic>> maps = await db.query('media_data');
 
     return List.generate(maps.length, (i) {
-      return maps[i]['id'];
+      return [maps[i]['mediaTypeCode'], maps[i]['mediaID']];
     });
   }
 
-  Future<void> deleteMediaData(int id) async {
+  Future<void> deleteMediaData(int mediaTypeCode, int mediaID) async {
     final db = await DBProvider.db.database;
 
     await db.delete(
       'media_data',
-      where: "id = ?",
-      whereArgs: [id],
+      where: "mediaTypeCode = ? AND mediaID = ?",
+      whereArgs: [mediaTypeCode, mediaID],
     );
   }
 
-  Future<bool> isContain(int id) async {
+  Future<bool> isContain(int mediaTypeCode, int mediaID) async {
     final db = await DBProvider.db.database;
     var count = firstIntValue(await db.query('media_data',
-        columns: ['COUNT(*)'], where: 'id = ?', whereArgs: [id]));
-    return count > 0;
+        columns: ['COUNT(*)'],
+        where: 'mediaTypeCode = ? AND mediaID = ?',
+        whereArgs: [mediaTypeCode, mediaID]));
+    return count! > 0;
   }
 }
 

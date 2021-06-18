@@ -19,7 +19,7 @@ class DBProvider {
       join(await getDatabasesPath(), 'media_database.db'),
       onCreate: (db, version) {
         return db.execute(
-          "CREATE TABLE media_data(id INTEGER)",
+          "CREATE TABLE media_data(mediaTypeCode INTERGER, mediaID INTEGER)",
         );
       },
       version: 1,

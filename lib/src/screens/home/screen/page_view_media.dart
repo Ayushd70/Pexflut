@@ -34,7 +34,7 @@ class MediaPage extends StatefulWidget {
 }
 
 class _MediaPageState extends State<MediaPage> {
-  final _scrollController = ScrollController();
+  ScrollController  _scrollController = ScrollController();
   final _scrollThreshold = 200.0;
   late MediaListBloc _mediaListBloc;
 
