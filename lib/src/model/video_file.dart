@@ -5,15 +5,15 @@ class VideoFile extends Equatable {
     required this.id,
     required this.quality,
     required this.fileType,
-    required this.width,
-    required this.height,
+    this.width,
+    this.height,
     required this.link,
   });
   final int id;
   final String quality;
   final String fileType;
-  final int width;
-  final int height;
+  final int? width;
+  final int? height;
   final String link;
 
   factory VideoFile.fromMap(Map<String, dynamic> map) => VideoFile(
@@ -25,7 +25,7 @@ class VideoFile extends Equatable {
       link: map['link']);
 
   @override
-  List<Object> get props => [id, quality, fileType, width, height, link];
+  List<Object> get props => [id, quality, fileType, link];
 
   @override
   String toString() => '''
