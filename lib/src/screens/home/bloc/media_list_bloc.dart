@@ -46,14 +46,15 @@ class MediaListBloc extends Bloc<MediaListEvent, MediaListState> {
           final nextVideos = List.castFrom<dynamic, Video>(await mediaRepository
               .fetchData(mediaType: videoCode, page: 1, keyWord: keyWord));
 
+          print(nextPhotos.length);
+
           yield MediaListSuccessState(
               photos: nextPhotos, videos: nextVideos, hasReachedMax: false);
           photos.addAll(nextPhotos);
           videos.addAll(nextVideos);
 
           return;
-        }
-        if (currentState is MediaListSuccessState) {
+        } else if (currentState is MediaListSuccessState) {
           if (mediaTypeCode == photoCode) {
             final nextPhotos = List.castFrom<dynamic, Photo>(
                 await mediaRepository.fetchData(
@@ -99,6 +100,7 @@ class MediaListBloc extends Bloc<MediaListEvent, MediaListState> {
           }
         }
       } catch (_) {
+        print(_);
         yield MediaListFailureState();
       }
     }

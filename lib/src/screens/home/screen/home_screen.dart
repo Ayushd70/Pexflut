@@ -1,4 +1,8 @@
+import 'dart:async';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:pex_flut/resource/resources.dart';
+import 'no_internet.dart';
 import 'page_view_media.dart';
 import '../bloc/search_bloc.dart';
 import '../bloc/media_list_bloc.dart';
@@ -13,6 +17,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late TextEditingController _textEditingControler;
+  late StreamSubscription<ConnectivityResult> _subscription;
+  bool online = false;
 
   PageController pageController = PageController(
     initialPage: 0,
@@ -24,6 +30,15 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _textEditingControler = TextEditingController();
+    _subscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      print(result);
+      if (result == ConnectivityResult.none)
+        setState(() => online = false);
+      else
+        setState(() => online = true);
+    });
   }
 
   @override
@@ -39,16 +54,19 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
       child: Scaffold(
         appBar: buildSearchBar(_textEditingControler),
-        body: PageViewMedia(
+        body: online
+            ? PageViewMedia(
           pageController: pageController,
           pageCallback: (index) => bottomSelected(index),
-        ),
+        )
+            : NoInternet(),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: bottomNavigationIndex,
           items: buildBottomNavBarItems(),
           onTap: (index) => {
-            pageController.animateToPage(index,
-                duration: Duration(milliseconds: 500), curve: Curves.ease),
+            if (online)
+              pageController.animateToPage(index,
+                  duration: Duration(milliseconds: 500), curve: Curves.ease),
             bottomSelected(index)
           },
         ),
@@ -65,6 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void dispose() {
     _textEditingControler.dispose();
+    _subscription.cancel();
     super.dispose();
   }
 
