@@ -144,7 +144,9 @@ Widget _buildVideoWidget(BuildContext context, Video video, int index) {
                   Radius.circular(10.0),
                 ),
               ),
-              child: Image.network(video.videoPictures[0].picture,
+              child: Image.network(
+                  video.videoPictures[0].picture ??
+                      'https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png',
                   fit: BoxFit.cover),
             ),
           ),

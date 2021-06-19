@@ -1,4 +1,3 @@
-
 import 'package:pex_flut/resource/resources.dart';
 import 'package:pex_flut/src/model/image.dart';
 import 'package:pex_flut/src/model/video.dart';
@@ -96,6 +95,7 @@ class _BuildMediaWidgetState extends State<BuildMediaWidget> {
                             mediaTypeCode: photoCode, mediaID: photo.id));
                       },
                       icon: Icon(
+                        // ignore: dead_code
                         isLiked ? Icons.favorite : Icons.favorite_border,
                         color: Colors.red,
                       ),
@@ -140,7 +140,9 @@ class _BuildMediaWidgetState extends State<BuildMediaWidget> {
                     Radius.circular(10.0),
                   ),
                 ),
-                child: Image.network(video.videoPictures[0].picture,
+                child: Image.network(
+                    video.videoPictures[0].picture ??
+                        'https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png',
                     fit: BoxFit.cover),
               ),
             ),
@@ -194,6 +196,7 @@ class _BuildMediaWidgetState extends State<BuildMediaWidget> {
                             mediaTypeCode: videoCode, mediaID: video.id));
                       },
                       icon: Icon(
+                        // ignore: dead_code
                         isLiked ? Icons.favorite : Icons.favorite_border,
                         color: Colors.red,
                       ),

@@ -1,7 +1,7 @@
 name: pex_flut
 description: Wallpaper and Video App developed in Flutter using Pexels API
 
-publish_to: 'none'
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
@@ -10,24 +10,22 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
+  connectivity_plus: ^1.0.3
   cupertino_icons: ^1.0.2
-  pedantic: ^1.11.0
   dio: ^4.0.0
   equatable: ^2.0.3
-  flutter_bloc: ^7.0.1
   fluro: ^2.0.3
-  video_player: ^2.1.6
-  rubber: ^1.0.0
+  flutter_bloc: ^7.0.1
   path: ^1.8.0
-  sqflite: ^2.0.0+3
+  pedantic: ^1.11.0
+  rubber: ^1.0.0
   rxdart: ^0.27.1
-  google_fonts: ^2.1.0
+  sqflite: ^2.0.0+3
+  video_player: ^2.1.6
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
 
 flutter:
   uses-material-design: true
