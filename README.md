@@ -1,16 +1,36 @@
-# pex_flut
+# Pexflut
 
-Wallpaper and Video App developed in Flutter using Pexels API
+A Flutter application to display and play videos/images using [Pexels API](https://www.pexels.com/api/documentation/).
+Each item in the list displays artist and image name. There is a favorite icon, which user can tap to mark/unmark that video or image as a favorite.
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## App Screenshots
 
-A few resources to get you started if this is your first Flutter project:
+<p align="center">
+  <img width="32%" src="images/pic-1.png?raw=true">
+  <img width="32%" src="images/pic-2.png?raw=true">
+  <img width="32%" src="images/pic-3.png?raw=true">
+  <img width="32%" src="images/pic-4.png?raw=true">
+  <img width="32%" src="images/pic-5.png?raw=true">
+  <img width="32%" src="images/pic-6.png?raw=true">
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+</p>
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+## Tech stack
+The libraries that this app is using as of now:
+- [connectivity_plus](https://pub.dev/packages/connectivity_plus)
+- [cupertino_icons](https://pub.dev/packages/cupertino_icons)
+- [dio](https://pub.dev/packages/dio)
+- [equatable](https://pub.dev/packages/equatable)
+- [fluro](https://pub.dev/packages/fluro)
+- [flutter_bloc](https://pub.dev/packages/flutter_bloc)
+- [google_fonts](https://pub.dev/packages/google_fonts)
+- [path](https://pub.dev/packages/path)
+- [pedantic](https://pub.dev/packages/pedantic)
+- [rubber](https://pub.dev/packages/rubber)
+- [rxdart](https://pub.dev/packages/rxdart)
+- [sqflite](https://pub.dev/packages/sqflite)
+- [video_player](https://pub.dev/packages/video_player)
+
+The test coverage is _decent_, but not ideal. The app does not have a lot of moving parts, and the business logic end of things is tested properly.
