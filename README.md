@@ -41,6 +41,13 @@ The libraries that this app is using as of now:
 - [Sqflite (`sqflite`)](https://pub.dev/packages/sqflite)
 - [Video Player (`video_player`)](https://pub.dev/packages/video_player)
 
+#### Platform Support
+
+| Android | iOS | MacOS | Web |
+|:-------:|:---:|:-----:|:---:|
+|    ✔️    |  ✔️  |       | ️  |
+
+----
 
 ## License
 
