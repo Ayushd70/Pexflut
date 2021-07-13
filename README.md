@@ -49,6 +49,35 @@ The libraries that this app is using as of now:
 
 ----
 
+## Run Locally
+
+Make sure that you have flutter and dart installed and setup. If you don't then refer to the official installation instructions at [Flutter Docs](https://flutter.dev/docs/get-started/install)
+
+Then run the following commands
+
+Clone the project
+
+```bash
+  git clone https://github.com/derpLLC/pexflut
+```
+
+Go to the project directory
+
+```bash
+  cd pexflut
+```
+
+Run the app
+
+```bash
+  flutter run
+```
+
+## Issues
+
+Please file issues, bugs, or feature requests in our [issue tracker](https://github.com/derpLLC/pexflut/issues/new/choose).
+
+
 ## License
 
 ```
