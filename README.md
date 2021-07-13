@@ -2,7 +2,7 @@
 
 A Flutter application to display and play videos/images using [Pexels API](https://www.pexels.com/api/documentation/).
 Each item in the list displays artist and image name. There is a favorite icon, which user can tap to mark/unmark that video or image as a favorite.
-
+User can search for there respective images/videos :D
 
 ## App Screenshots
 
