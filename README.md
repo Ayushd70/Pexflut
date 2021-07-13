@@ -22,23 +22,25 @@ User can search for there respective images/videos :D
   <img width="50%" src="images/demo.gif?raw=true">
 </p>
 
-## Tech stack
-The libraries that this app is using as of now:
-- [connectivity_plus](https://pub.dev/packages/connectivity_plus)
-- [cupertino_icons](https://pub.dev/packages/cupertino_icons)
-- [dio](https://pub.dev/packages/dio)
-- [equatable](https://pub.dev/packages/equatable)
-- [fluro](https://pub.dev/packages/fluro)
-- [flutter_bloc](https://pub.dev/packages/flutter_bloc)
-- [google_fonts](https://pub.dev/packages/google_fonts)
-- [path](https://pub.dev/packages/path)
-- [pedantic](https://pub.dev/packages/pedantic)
-- [rubber](https://pub.dev/packages/rubber)
-- [rxdart](https://pub.dev/packages/rxdart)
-- [sqflite](https://pub.dev/packages/sqflite)
-- [video_player](https://pub.dev/packages/video_player)
+## Plugins
 
-The test coverage is _decent_, but not ideal. The app does not have a lot of moving parts, and the business logic end of things is tested properly.
+**Table of contents:**
+The libraries that this app is using as of now:
+
+- [Connectivity Plus (`connectivity_plus`)](https://pub.dev/packages/connectivity_plus)
+- [Cupertino Icons (`cupertino_icons`)](https://pub.dev/packages/cupertino_icons)
+- [Dio (`dio`)](https://pub.dev/packages/dio)
+- [Equatable (`equatable`)](https://pub.dev/packages/equatable)
+- [Fluro (`fluro`)](https://pub.dev/packages/fluro)
+- [Flutter Bloc (`flutter_bloc`)](https://pub.dev/packages/flutter_bloc)
+- [Google Fonts (`google_fonts`)](https://pub.dev/packages/google_fonts)
+- [Path (`path`)](https://pub.dev/packages/path)
+- [Pedantic (`pedantic`)](https://pub.dev/packages/pedantic)
+- [Rubber (`rubber`)](https://pub.dev/packages/rubber)
+- [Rxdart (`rxdart`)](https://pub.dev/packages/rxdart)
+- [Sqflite (`sqflite`)](https://pub.dev/packages/sqflite)
+- [Video Player (`video_player`)](https://pub.dev/packages/video_player)
+
 
 ## License
 
