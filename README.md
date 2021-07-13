@@ -16,6 +16,11 @@ User can search for there respective images/videos :D
 
 </p>
 
+## App Demo
+
+<p align="center">
+  <img width="50%" src="images/demo.gif?raw=true">
+</p>
 
 ## Tech stack
 The libraries that this app is using as of now:
