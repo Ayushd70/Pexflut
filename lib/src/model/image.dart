@@ -35,15 +35,15 @@ class Photo extends Equatable {
 
   @override
   List<Object> get props => [
-    id,
-    width,
-    height,
-    url,
-    photographer,
-    photographerUrl,
-    photographerId,
-    src
-  ];
+        id,
+        width,
+        height,
+        url,
+        photographer,
+        photographerUrl,
+        photographerId,
+        src
+      ];
 
   @override
   String toString() => '''

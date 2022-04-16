@@ -51,16 +51,16 @@ class Video extends Equatable {
 
   @override
   List<Object> get props => [
-    id,
-    width,
-    height,
-    url,
-    image,
-    duration,
-    user,
-    videoFiles,
-    videoPictures
-  ];
+        id,
+        width,
+        height,
+        url,
+        image,
+        duration,
+        user,
+        videoFiles,
+        videoPictures
+      ];
 
   @override
   String toString() => '''

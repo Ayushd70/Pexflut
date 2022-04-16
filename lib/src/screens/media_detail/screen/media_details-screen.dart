@@ -37,26 +37,26 @@ class MediaDetail extends StatelessWidget {
       ),
       body: BlocBuilder<MediaDetailBloc, MediaDetailState>(
           builder: (BuildContext context, state) {
-            if (state is InitialMediaDetailState) {
-              BlocProvider.of<MediaDetailBloc>(context).add(
-                InitialMediaDetailEvent(mediaType: mediaType, mediaKey: mediaKey),
-              );
-            }
-            if (state is LoadingMediaState) {
-              return Center(child: CircularProgressIndicator());
-            }
-            if (state is ShowMediaState) {
-              if (state.mediaType == photoCode) {
-                return PhotoShowScreen(
-                  state: state,
-                );
-              } else {
-                return VideoPlayerScreen(state: state);
-              }
-            } else {
-              return Text(otherError);
-            }
-          }),
+        if (state is InitialMediaDetailState) {
+          BlocProvider.of<MediaDetailBloc>(context).add(
+            InitialMediaDetailEvent(mediaType: mediaType, mediaKey: mediaKey),
+          );
+        }
+        if (state is LoadingMediaState) {
+          return Center(child: CircularProgressIndicator());
+        }
+        if (state is ShowMediaState) {
+          if (state.mediaType == photoCode) {
+            return PhotoShowScreen(
+              state: state,
+            );
+          } else {
+            return VideoPlayerScreen(state: state);
+          }
+        } else {
+          return Text(otherError);
+        }
+      }),
     );
   }
 }

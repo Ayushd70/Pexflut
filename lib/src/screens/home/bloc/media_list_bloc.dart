@@ -19,9 +19,9 @@ class MediaListBloc extends Bloc<MediaListEvent, MediaListState> {
 
   @override
   Stream<Transition<MediaListEvent, MediaListState>> transformEvents(
-      Stream<MediaListEvent> events,
-      TransitionFunction<MediaListEvent, MediaListState> transitionFn,
-      ) {
+    Stream<MediaListEvent> events,
+    TransitionFunction<MediaListEvent, MediaListState> transitionFn,
+  ) {
     return super.transformEvents(
       events.debounceTime(const Duration(milliseconds: 500)),
       transitionFn,

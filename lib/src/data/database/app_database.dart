@@ -6,11 +6,11 @@ class AppDatabase {
   Future<void> insertMediaData(int mediaTypeCode, int mediaID) async {
     final Database db = await DBProvider.db.database;
     var count = firstIntValue(await db.query(
-      'media_data',
-      columns: ['COUNT(*)'],
-      where: 'mediaID = ?',
-      whereArgs: [mediaID],
-    )) ??
+          'media_data',
+          columns: ['COUNT(*)'],
+          where: 'mediaID = ?',
+          whereArgs: [mediaID],
+        )) ??
         0;
     if (count > 0) return null;
 
@@ -44,11 +44,11 @@ class AppDatabase {
   Future<bool> isContain(int mediaTypeCode, int mediaID) async {
     final db = await DBProvider.db.database;
     var count = firstIntValue(await db.query(
-      'media_data',
-      columns: ['COUNT(*)'],
-      where: 'mediaTypeCode = ? AND mediaID = ?',
-      whereArgs: [mediaTypeCode, mediaID],
-    )) ??
+          'media_data',
+          columns: ['COUNT(*)'],
+          where: 'mediaTypeCode = ? AND mediaID = ?',
+          whereArgs: [mediaTypeCode, mediaID],
+        )) ??
         0;
     return count > 0;
   }

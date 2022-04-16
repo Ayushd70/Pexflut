@@ -56,9 +56,9 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: buildSearchBar(_textEditingControler),
         body: online
             ? PageViewMedia(
-          pageController: pageController,
-          pageCallback: (index) => bottomSelected(index),
-        )
+                pageController: pageController,
+                pageCallback: (index) => bottomSelected(index),
+              )
             : NoInternet(),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: bottomNavigationIndex,

@@ -92,15 +92,15 @@ class _MediaPageState extends State<MediaPage> {
 
           return widget.mediaTypeCode == photoCode
               ? BuildMediaListWidget(
-            mediaList: state.photos,
-            hasReachedMax: state.hasReachedMax,
-            scrollController: _scrollController,
-          )
+                  mediaList: state.photos,
+                  hasReachedMax: state.hasReachedMax,
+                  scrollController: _scrollController,
+                )
               : BuildMediaListWidget(
-            mediaList: state.videos,
-            hasReachedMax: state.hasReachedMax,
-            scrollController: _scrollController,
-          );
+                  mediaList: state.videos,
+                  hasReachedMax: state.hasReachedMax,
+                  scrollController: _scrollController,
+                );
         } else
           return Center(
             child: Text(otherError),
@@ -144,9 +144,9 @@ class BuildMediaListWidget extends StatelessWidget {
           return index >= mediaList.length
               ? BottomLoader()
               : BuildMediaWidget(
-            photo: mediaList[index],
-            index: index,
-          );
+                  photo: mediaList[index],
+                  index: index,
+                );
         },
         itemCount: hasReachedMax ? mediaList.length : mediaList.length + 1,
         controller: scrollController,
@@ -159,9 +159,9 @@ class BuildMediaListWidget extends StatelessWidget {
           return index >= mediaList.length
               ? BottomLoader()
               : BuildMediaWidget(
-            video: mediaList[index],
-            index: index,
-          );
+                  video: mediaList[index],
+                  index: index,
+                );
         },
         itemCount: hasReachedMax ? mediaList.length : mediaList.length + 1,
         controller: scrollController,

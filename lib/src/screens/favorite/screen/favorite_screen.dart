@@ -22,7 +22,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         ),
         body: BlocProvider(
           create: (BuildContext context) =>
-          FavoriteBloc()..add(FavoriteFetchEvent()),
+              FavoriteBloc()..add(FavoriteFetchEvent()),
           child: MediaFavoriteList(),
         ));
   }

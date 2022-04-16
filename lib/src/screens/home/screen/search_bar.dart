@@ -91,11 +91,11 @@ AppBar buildSearchBar(TextEditingController textEditingControler) {
                     color: Colors.black,
                   ),
                   onPressed: () => {
-                    BlocProvider.of<MediaListBloc>(context)
-                        .add(SearchMediaEvent(keyWord: '')),
-                    BlocProvider.of<MediaSearchBloc>(context)
-                        .add(BackArrowEvent()),
-                  }),
+                        BlocProvider.of<MediaListBloc>(context)
+                            .add(SearchMediaEvent(keyWord: '')),
+                        BlocProvider.of<MediaSearchBloc>(context)
+                            .add(BackArrowEvent()),
+                      }),
               Expanded(
                 child: GestureDetector(
                   child: Text(
